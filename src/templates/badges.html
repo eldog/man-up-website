@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+<h1>Badges</h1>
+<p>
+Badges are what earn members of MAN-UP XP. They are the rewards that are given for completing the task laid out in their description. 
+</p>
+<a href="/badge_application"><b>APPLY FOR BADGE</b></a>
+	<h2>Badge table</h2>
+	<table>
+		<tr>
+			<td/>
+			<th><a href="/badges?order=name">Name</a></th>
+			<th><a href="/badges?order=value">XP</a></th>
+			<th><a href="/badges?order=category">Category</a></th>
+			<th>Description</th>
+			<th><a href="/badges?order=receivers"># awarded</a></th>
+		</tr>
+		{% for badge in badges %}
+			<tr>
+				<td><a href="/badges/{{ badge.name }}"><img src="{{ badge.image }}"/></a></td>
+				<td><a href="/badges/{{ badge.name }}">{{ badge.name }}</td>
+				<td>{{ badge.value }}</td>
+				<td>{{ badge.category }}</td>
+				<td>{{ badge.description}}</td>
+				<td>{{ badge.awards.count }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}
+		

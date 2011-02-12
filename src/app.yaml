@@ -1,0 +1,45 @@
+application: man-up
+version: 1
+runtime: python
+api_version: 1
+
+builtins:
+  - remote_api: on
+
+handlers:
+  # Static files
+  - url: /favicon.ico
+    static_files: static/img/favicon.ico
+    upload: static/img/favicon.ico
+
+  # Static directories
+  - url: /img
+    static_dir: static/img
+
+  - url: /project-files
+    static_dir: static/project-files
+  
+  - url: /stylesheets
+    static_dir: static/stylesheets
+  
+  # Admin requests
+  - url: /admin
+    script: manup.py
+    login: admin
+  
+  # Logged in requets
+  - url: /account
+    script: manup.py
+    login: required
+  
+  - url: /badge_application
+    script: manup.py
+    login: required
+    
+  - url: /login
+    script: manup.py
+    login: required
+  
+  # Other
+  - url: /.*
+    script: manup.py 

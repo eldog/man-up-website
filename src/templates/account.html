@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block main %}
+	{% if error %}
+		<p>{{ error }}</p>
+	{% endif %}
+	<h3>Update Profile</h3>
+	<form action="/account" method="post">
+		<label for="handle">Handle</label>: <input type="text" id="handle" name="handle" value="{{ user.handle }}"/><br />
+		<label for="email">Email</label> (optional): <input type="text" id="email" name="email" value="{{ user.email }}" /><br />
+		<label for="real_name">Real name (optional)</label>: <input type="text" id="real_name" name="real_name" value="{{ user.real_name }}"/><br />
+		<input type="submit" value="Submit">
+	</form>
+{% endblock %}

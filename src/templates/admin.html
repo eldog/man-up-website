@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block main %}
+	<p>THIS IS THE GOD PAGE. I'VE NOT WRITTEN ANY SAFETY INTO THIS, SO BE CAREFUL.</P>
+	
+	<h2>News Article</h2>
+	<form action="/admin" method="post">
+		<input type="hidden" name="kind" value="article"/>
+		Title: <input type="text" name="title" /><br />
+		Author: <input type="text" name="author" /><br />
+		Body: <br />
+		<textarea name="body"></textarea><br/>
+		<input type="submit">Submit</input>
+	</form>
+	
+	<h2>Bagde</h2>
+	<form action="/admin" method="post">
+		<input type="hidden" name="kind" value="badge"/>
+		Name: <input type="text" name="name"/><br/>
+		Desc: <input type="text" name="description"/><br/>
+		Cate: <input type="text" name="category"/><br/>
+		Image: <input type="text" name="image"/><br/>
+		value: <input type="text" name="value"/><br/>	
+		<input type="submit">Submit</input>
+	</form>
+	
+	<h2>Award</h2>
+	<form action="/admin" method="post">
+		<input type="hidden" name="kind" value="award"/>
+		<select name="hackers" size="10" multiple="multiple">
+			{% for hacker in hackers %}
+				<option value="{{ hacker.handle }}">{{ hacker.handle }}</option>
+			{% endfor %}
+		</select>
+		<select name="badge" size="10">
+			{% for badge in badges %}
+				<option value="{{ badge.name }}">{{ badge.name }}</option>
+			{% endfor %}
+		</select><br/>
+		Proof: <input type="text" name="proof"/><br />
+		<input type="submit">Submit</input>
+	</form>
+	
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block main %}
+    {% for news_article in news_articles %}
+    	<div class="article">
+        	<h1>{{ news_article.title }}</h1>
+            <p>{{news_article.author}}, {{ news_article.date}}</p>
+           	<p>{{ news_article.body }}</p>
+        </div>
+    {% endfor %}    
+{% endblock %}

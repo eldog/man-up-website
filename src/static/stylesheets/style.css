@@ -1,0 +1,77 @@
+a {
+	color: inherit;
+}
+
+a img {
+	border: none;
+}
+
+html {
+	background: black;
+	font-family: monospace;
+	color: white;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-image: url('/img/bg.jpg');
+	background-position: top;
+	background-repeat: no-repeat;
+	margin: auto;
+}
+
+#wrapper {
+	min-height: 605px;
+	margin: auto;
+	width: 800px;
+}
+
+#user {
+    background: black;
+    float: right;
+}
+
+#header {
+	padding-top: 110px;
+	margin: auto;
+}
+
+#top-bar {
+	border-top: 1px solid white;
+	border-bottom: 1px solid white;
+}
+
+#navigation {
+	float: left;
+}
+
+#status {
+	color: red;
+	float: right;
+	font-weight: bold;
+}
+
+#footer {
+	color: gray;
+	font-size: small;
+	margin-bottom: 50px;
+	margin-top: 50px;
+	text-align: center;
+}
+
+table {
+	width: 100%;
+}
+
+td {
+	padding: 5px;
+}
+
+th {
+	background-color: gray;
+}
+
+.answer {
+	color: gray;
+}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block main %}
+	{% if message %}
+		<p>{{ message }}</p>
+	{% else %}
+		<form action="/badge_application" method="post">
+			<label for="badge">Badge: </label><select id="badge" name="badge">
+				{% for badge in badges %}
+					<option {% ifequal badge.name selected_badge %}selected{% endifequal %}>
+						{{ badge.name }}
+					</option>
+				{% endfor %}
+			</select><br />
+			<label for="proof">Links to proof:</label><br />
+			<textarea id="proof" name="proof"></textarea><br />
+			<input type="submit" />
+		</form>
+	{% endif %}
+
+{% endblock %}

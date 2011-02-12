@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block main %}
+<p>
+<h1>Members</h1>
+<p>
+Members of MAN-UP are listed and their handle is displayed along with their current XP. XP is earned through <a href="/badges">badges</a>.
+</p>
+<h2>Members table</h2>
+<table>
+	<tr>
+		<th>Rank</th>
+		<th>Handle</th>
+		<th>XP</th>
+	</tr>
+	{% for ranked_hacker in hackers %}
+		<tr>
+			<td>{{ ranked_hacker.0 }}</td>
+			<td><a href="members/{{ ranked_hacker.1.handle }}">{{ ranked_hacker.1.handle }}</a></td>
+			<td>{{ ranked_hacker.1.score }}</td>
+		</tr>
+	{% endfor %}
+</table>
+</p>
+{% endblock %}

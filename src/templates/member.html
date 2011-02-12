@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block main %}
+	{% if hacker %}
+		<h2>{{ hacker.handle }}</h2> 
+		<p>XP: {{ hacker.score }} | Awards: {{ hacker.awards.count }}{% if hacker.real_name %} | Real name: {{ hacker.real_name }}{% endif %}
+		{% if hacker.email %}  | Email: {{hacker.email}} {%endif%}</p>
+		<table>
+			<tr>
+				<td/>
+				<th>Name</th>
+				<th>XP</th>
+				<th>Description</th>
+				<th>Proof</th>
+				<th>Awarded</th>
+			</tr>
+			{% for award in hacker.awards %}
+				<tr>
+					<td><a href="/badges/{{ award.badge.name }}"><img src="{{ award.badge.image }}"/></a></td>
+					<td><a href="/badges/{{ award.badge.name }}">{{ award.badge.name }}</a></td>
+					<td>{{ award.badge.value }}</td>
+					<td>{{ award.badge.description }}</td>
+					<td>{% if award.proof %}<a href="{{ award.proof }}">PROOF</a>{% endif %}</td>
+					<td>{{ award.date }}</td>
+				</tr>
+			{% endfor %}
+		</table>
+	{% else %}
+		<p>No such member</p>
+	{% endif %}
+{% endblock %}

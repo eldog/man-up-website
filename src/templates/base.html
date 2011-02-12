@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>{% if title %}{{ title }} - {% endif %}Man UP</title>
+    </head>
+
+	<body>
+    	<div id="wrapper"> 
+    		<div id="user">
+    			{% if user %}
+    				<a href="/account">{{ user.handle }}</a> 
+				{% endif %}
+				<a href="{{ log_url }}">log {% if user %}out{% else %}in/register{% endif %}</a>
+    		</div>
+	        
+	        <div id="header">
+	        	<a href="/"><img src="/img/man-up-logo.png"/></a>
+	        	
+	        </div>
+	        
+	    	<div id="top-bar">
+		    	<div id="navigation">
+		    		<p>
+		                <a href="/">Home</a>
+		                <a href="/projects">Projects</a>
+		                <a href="/members">Members</a>
+		                <a href="/badges">Badges</a>
+		                <a href="/manual">Manual</a>
+		                <a href="/calendar">Calendar</a>
+		                <a href="/contact">Contact</a>
+		                <a href="/faq">FAQ</a>
+	                </p>
+		    	</div>
+		    	           
+		        <div id="status">
+		            <p>{{ tag_line }}</p>
+		        </div>
+		        <div style="clear: both;"></div>
+	        </div>
+	
+        	<div id="main">
+            	{% block main %}
+    			{% endblock %}  
+        	</div>
+        	
+        	<div id="footer">Copyright &copy; 2011 MAN-UP</div>
+    	
+    	</div>
+	</body>
+</html>
