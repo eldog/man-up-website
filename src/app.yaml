@@ -24,22 +24,22 @@ handlers:
   
   # Admin requests
   - url: /admin
-    script: manup.py
+    script: main.py
     login: admin
   
   # Logged in requets
   - url: /account
-    script: manup.py
+    script: main.py
     login: required
   
   - url: /badge_application
-    script: manup.py
+    script: main.py
     login: required
     
   - url: /login
-    script: manup.py
+    script: main.py
     login: required
   
   # Other
   - url: /.*
-    script: manup.py 
+    script: main.py 

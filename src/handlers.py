@@ -4,9 +4,7 @@ import datetime
 
 from google.appengine.api import users
 from google.appengine.api.mail import send_mail
-from google.appengine.ext import db, webapp
 from google.appengine.ext.webapp import RequestHandler, template
-from google.appengine.ext.webapp.util import run_wsgi_app
 
 import utils
 
@@ -52,7 +50,7 @@ class BaseHandler(RequestHandler):
             template.render(template_path, template_dict))
 
 
-class AccountPage(BaseHandler):
+class AccountHandler(BaseHandler):
     login_required = True
     title = 'Account'
     
@@ -99,7 +97,7 @@ class AccountPage(BaseHandler):
     def get(self):
         self.render_template('account')
 
-class AdminPage(BaseHandler):
+class AdminHandler(BaseHandler):
     login_required = True
     def post(self):
         post =  self.request.POST
@@ -129,7 +127,7 @@ class AdminPage(BaseHandler):
         self.render_template('admin', {'badges': Badge.all(),
                                        'hackers': Hacker.all()})
         
-class BadgePage(BaseHandler):
+class BadgeHandler(BaseHandler):
     def get(self, name):
         query = Badge.gql('WHERE name = :1', urllib.unquote(name))
         badge = iter(query).next() if query.count() else None
@@ -164,7 +162,7 @@ class BadgeApplicationHandler(BaseHandler):
             'selected_badge': selected_badge})
     
 
-class BadgesPage(BaseHandler):
+class BadgesHandler(BaseHandler):
     title = 'Badges'
     def get(self):
         order = self.request.GET.get('order', 'value')
@@ -176,20 +174,20 @@ class BadgesPage(BaseHandler):
         self.render_template('badges', {'badges': b})
 
 
-class CalendarPage(BaseHandler):
+class CalendarHandler(BaseHandler):
     def get(self):
         self.render_template('calendar')
 
 
-class ContactPage(BaseHandler):
+class ContactHandler(BaseHandler):
     def get(self):
         self.render_template('contact')
 
-class FAQPage(BaseHandler):
+class FAQHandler(BaseHandler):
     def get(self):
         self.render_template('faq')
 
-class ManualPage(BaseHandler):
+class ManualHandler(BaseHandler):
     def get(self):
         self.render_template('manual')
 
@@ -206,7 +204,7 @@ class LoginHandler(BaseHandler):
             self.redirect('/')
 
 
-class MembersPage(BaseHandler):
+class MembersHandler(BaseHandler):
     def get(self):
         hackers = list(Hacker.all())
         if hackers:
@@ -221,7 +219,7 @@ class MembersPage(BaseHandler):
         self.render_template('members', {'hackers': ranked_hackers})
 
         
-class MemberPage(BaseHandler):
+class MemberHandler(BaseHandler):
     def get(self, handle):
         query = Hacker.gql('WHERE handle = :1', urllib.unquote(handle))
         hacker = iter(query).next() if query.count() else None
@@ -232,12 +230,12 @@ class MessagesHandler(BaseHandler):
         message_path = 'static/messages/%s.html' % message_index
         self.response.out.write(open(message_path).read())
 
-class NewsPage(BaseHandler):
+class NewsHandler(BaseHandler):
     def get(self):
         news_articles = NewsArticle.gql('ORDER BY date DESC')
         self.render_template('news', {'news_articles': news_articles})
 
 
-class ProjectsPage(BaseHandler):
+class ProjectsHandler(BaseHandler):
     def get(self):
         self.render_template('projects')
