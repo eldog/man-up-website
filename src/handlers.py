@@ -215,6 +215,8 @@ class MembersHandler(BaseHandler):
                 if hackers[i + 1].score_cache != hackers[i].score_cache:
                     rank += 1
                 ranked_hackers.append((rank, hackers[i]))
+        else:
+            ranked_hackers = []
             
         self.render_template('members', {'hackers': ranked_hackers})
 
