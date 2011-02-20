@@ -8,6 +8,7 @@ class Hacker(db.Model):
     bio = db.TextProperty(default='')
     real_name = db.StringProperty(default='')
     score_cache = db.IntegerProperty(default=-1)
+    teams = db.ListProperty(db.Key)
     
     @property
     def score(self):
@@ -41,6 +42,13 @@ class Award(db.Model):
     badge = db.ReferenceProperty(Badge, collection_name='awards')
     date = db.DateProperty(required=True)
     proof = db.StringProperty(default='')
+
+class Team(db.Model):
+    name = db.StringProperty(required=True)
+    
+    @property
+    def members(self):
+        return Hacker.gql("WHERE groups = :1", self.key())
 
 class NewsArticle(db.Model):
     title = db.TextProperty(required=True)

@@ -252,3 +252,20 @@ class TalksHandler(BaseHandler):
     def get(self):
         self.render_template('talks')
         
+class TeamsHandler(BaseHandler):
+    def get(self):
+        self.render_template('teams', {'teams' : list(Team.all())})
+        
+class TeamSubmissionHandler(BaseHandler):
+    login_required = True
+    
+    def get(self):
+        self.render_template('team_submission')
+    
+    def post(self):
+        post = self.request.POST
+        
+        team = Team(name=post['team_name'])
+        team.save()
+        
+        self.response.out.write("submitted")
