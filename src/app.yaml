@@ -27,7 +27,7 @@ handlers:
     script: main.py
     login: admin
   
-  # Logged in requets
+  # Logged in requests
   - url: /account
     script: main.py
     login: required
@@ -37,6 +37,10 @@ handlers:
     login: required
     
   - url: /login
+    script: main.py
+    login: required
+    
+  - url: /team_submission
     script: main.py
     login: required
   

@@ -27,12 +27,12 @@
 	<h2>Award</h2>
 	<form action="/admin" method="post">
 		<input type="hidden" name="kind" value="award"/>
-		<select name="hackers" size="10" multiple="multiple">
+		<select name="hackers" size="20" multiple="multiple">
 			{% for hacker in hackers %}
 				<option value="{{ hacker.handle }}">{{ hacker.handle }}</option>
 			{% endfor %}
 		</select>
-		<select name="badge" size="10">
+		<select name="badge" size="20">
 			{% for badge in badges %}
 				<option value="{{ badge.name }}">{{ badge.name }}</option>
 			{% endfor %}

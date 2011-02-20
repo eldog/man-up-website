@@ -8,7 +8,7 @@ from google.appengine.ext.webapp import RequestHandler, template
 
 import utils
 
-from models import Award, Badge, Hacker, NewsArticle
+from models import Award, Badge, Hacker, NewsArticle, Team
 
 get_path = utils.path_getter(__file__)
 
@@ -58,14 +58,15 @@ class AccountHandler(BaseHandler):
         'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
     
     banned_names = {
-        u'neo': "Fat chance are you Neo. If you are, I'm not gona get my hopes up",
+        u'neo': "Fat chance are you Neo. If you are, I'm not gonna get my hopes up",
         }
     
     
     def post(self):
-        if len(self.request.POST) == 3 and 'handle' in self.request.POST \
+        if len(self.request.POST) == 4 and 'handle' in self.request.POST \
                 and 'real_name' in self.request.POST \
-                and 'email' in self.request.POST:
+                and 'email' in self.request.POST \
+                and 'bio' in self.request.POST:
             
             handle = self.request.POST.getall('handle')[0]
             template_dict = {}
@@ -89,6 +90,9 @@ class AccountHandler(BaseHandler):
                 email = self.request.POST.getall('email')[0]
                 if email:
                     hacker.email = email
+                bio = self.request.POST.getall('bio')[0]
+                if bio:
+                    hacker.bio = bio
                 hacker.handle = handle
                 hacker.save()
                 template_dict['error'] = 'Profile updated'
@@ -186,6 +190,10 @@ class ContactHandler(BaseHandler):
 class FAQHandler(BaseHandler):
     def get(self):
         self.render_template('faq')
+        
+class HackathonHandler(BaseHandler):
+    def get(self):
+        self.render_template('hack-a-thon')
 
 class ManualHandler(BaseHandler):
     def get(self):
@@ -202,7 +210,10 @@ class LoginHandler(BaseHandler):
                 self.redirect(self.request.GET.getall('url')[0])
         else:
             self.redirect('/')
-
+            
+class MasterclassHandler(BaseHandler):
+    def get(self):
+        self.render_template('masterclass')
 
 class MembersHandler(BaseHandler):
     def get(self):
@@ -237,6 +248,24 @@ class NewsHandler(BaseHandler):
         self.render_template('news')
 
 
-class ProjectsHandler(BaseHandler):
+class TalksHandler(BaseHandler):
     def get(self):
-        self.render_template('projects')
+        self.render_template('talks')
+        
+class TeamsHandler(BaseHandler):
+    def get(self):
+        self.render_template('teams', {'teams' : list(Team.all())})
+        
+class TeamSubmissionHandler(BaseHandler):
+    login_required = True
+    
+    def get(self):
+        self.render_template('team_submission')
+    
+    def post(self):
+        post = self.request.POST
+        
+        team = Team(name=post['team_name'])
+        team.save()
+        
+        self.response.out.write("submitted")

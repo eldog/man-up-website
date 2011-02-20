@@ -3,8 +3,17 @@
 {% block main %}
 	{% if hacker %}
 		<h2>{{ hacker.handle }}</h2> 
-		<p>XP: {{ hacker.score }} | Awards: {{ hacker.awards.count }}{% if hacker.real_name %} | Real name: {{ hacker.real_name }}{% endif %}
-		{% if hacker.email %}  | Email: {{hacker.email}} {%endif%}</p>
+		<p>XP: {{ hacker.score }} | Awards: {{ hacker.awards.count }}
+		{% if hacker.real_name %}
+		 | Real name: {{ hacker.real_name }}
+		{% endif %}
+		{% if hacker.email %}
+		 | Email: {{hacker.email}} 
+		 {% endif %}</p>
+		{% if hacker.bio %}
+			<h3>Bio</h3>
+			<p>{{ hacker.bio }}</p>
+		{% endif %}
 		<table>
 			<tr>
 				<td/>

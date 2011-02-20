@@ -40,6 +40,7 @@ body {
 #top-bar {
 	border-top: 1px solid white;
 	border-bottom: 1px solid white;
+	text-align: justify;
 }
 
 .manual-entry {
@@ -52,8 +53,8 @@ body {
 
 #status {
 	color: red;
-	float: right;
 	font-weight: bold;
+	text-align: right;
 }
 
 #footer {

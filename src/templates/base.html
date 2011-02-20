@@ -9,6 +9,7 @@
 
 	<body>
     	<div id="wrapper"> 
+    	
     		<div id="user">
     			{% if user %}
     				<a href="/account">{{ user.handle }}</a> 
@@ -18,26 +19,31 @@
 	        
 	        <div id="header">
 	        	<a href="/"><img src="/img/man-up-logo.png"/></a>
+	        	<span id="status">
+		            <p>{{ tag_line }}</p>
+		        </span>
 	        	
 	        </div>
 	        
+	        
+		        
 	    	<div id="top-bar">
 		    	<div id="navigation">
 		    		<p>
-		                <a href="/">Home</a>
-		                <a href="/projects">Projects</a>
+		                <a href="/">News</a>
+		                <a href="/talk">Talks</a>
+		                <a href="/hack-a-thon">Hack-a-thons</a>
+		                <a href="/masterclass">Masterclasses</a>
 		                <a href="/members">Members</a>
 		                <a href="/badges">Badges</a>
 		                <a href="/manual">Manual</a>
+		                <a href="/faq">FAQ</a>
 		                <a href="/calendar">Calendar</a>
 		                <a href="/contact">Contact</a>
-		                <a href="/faq">FAQ</a>
 	                </p>
 		    	</div>
 		    	           
-		        <div id="status">
-		            <p>{{ tag_line }}</p>
-		        </div>
+		        
 		        <div style="clear: both;"></div>
 	        </div>
 	
