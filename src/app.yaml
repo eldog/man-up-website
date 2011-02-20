@@ -39,10 +39,6 @@ handlers:
   - url: /login
     script: main.py
     login: required
-    
-  - url: /team_submission
-    script: main.py
-    login: required
   
   # Other
   - url: /.*

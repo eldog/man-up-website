@@ -14,7 +14,7 @@ get_path = utils.path_getter(__file__)
 
 class BaseHandler(RequestHandler):
     login_required = False
-    tag_line = 'Next meeting: 17/2/2011 LF15 5pm'
+    tag_line = 'Next meeting: 24/2/2011 LF15 5pm'
     title = None
     
     def render_template(self, template_name, template_dict=None):
@@ -252,20 +252,3 @@ class TalksHandler(BaseHandler):
     def get(self):
         self.render_template('talks')
         
-class TeamsHandler(BaseHandler):
-    def get(self):
-        self.render_template('teams', {'teams' : list(Team.all())})
-        
-class TeamSubmissionHandler(BaseHandler):
-    login_required = True
-    
-    def get(self):
-        self.render_template('team_submission')
-    
-    def post(self):
-        post = self.request.POST
-        
-        team = Team(name=post['team_name'])
-        team.save()
-        
-        self.response.out.write("submitted")

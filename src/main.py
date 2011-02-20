@@ -10,7 +10,7 @@ from handlers import AccountHandler, AdminHandler, BadgeHandler, \
     BadgesHandler, BadgeApplicationHandler, CalendarHandler, ContactHandler, \
     FAQHandler, HackathonHandler, LoginHandler, ManualHandler, \
     MasterclassHandler, MemberHandler, MembersHandler, \
-    MessagesHandler, NewsHandler, TalksHandler, TeamsHandler, TeamSubmissionHandler
+    MessagesHandler, NewsHandler, TalksHandler
 
 application = WSGIApplication(
     (('/'                  , NewsHandler),
@@ -30,8 +30,7 @@ application = WSGIApplication(
      ('/members/([^/]+)'   , MemberHandler),
      ('/messages/(\d+)'    , MessagesHandler),
      ('/talk'          , TalksHandler),
-     ('/teams'             , TeamsHandler),
-     ('/team_submission'   , TeamSubmissionHandler)),
+     ),
     debug=True)
 
 def main(argv=None):
