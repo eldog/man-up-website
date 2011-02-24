@@ -15,8 +15,55 @@
 	<h2>Craigacp's Face recognition and speech synthesis software</h2>
 	<center>
 	<iframe src="http://player.vimeo.com/video/20141014" width="400" height="300" frameborder="0"></iframe>
-	<br />
+
 	</center>
+	<br />
+	<p>
+	The is a quick hack together of two open source libraries, just to show how
+	many things are out there and how easy it is to program things which look
+	reasonably cool.
+	</p>
+	<p>
+	It uses OpenCV (a computer vision library) to perform a face recognition
+	technique called <a href="http://www.wikipedia.org/wiki/eigenfaces">Eigenfaces</a> which is one of
+	the simplest
+	methods for recognising faces. Eigenfaces averages all the faces together to
+	find the mean face, and then finds the principle variations between that
+	face and the
+	rest of the training faces using a process called Principle Components
+	Analysis (PCA). It then converts all the training faces into linear sums of
+	these components
+	(called eigenfaces), and recognises test faces by asking how close their
+	linear coefficients are to the training examples. Face detection is
+	something I didn't talk about
+	but the algorithm used is the <a href="http://en.wikipedia.org/wiki/Viola-Jones_object_detection_framework">Viola & Jones cascade</a>,
+	which is a standard technique for object recognition.
+	It works by passing a window over the image and looking for certain features
+	indicative of faces. Its an example of an ensemble learning technique for
+	those who did the
+	2nd year Machine Learning course. This code is mainly based on the tutorial
+	by <a href="http://www.shervinemami.co.cc/faceRecognition.html">Shervin Emami</a> but
+	objectified
+	to make it easier to use in other projects.
+	</p>
+	<p>
+	The speech synthesis is much easier than I'd imagined, and essentially just
+	instantiates an espeak object, and then passes it a char * to say. It does
+	sound rather
+	robotic, but its extremely easy to use, and is cross platform, and those
+	things are useful when trying to hack something together in two evenings.
+	</p>
+	<p>
+	Also, the code in that tarball isn't ideal, or even good, but it works, so
+	I'd achieved the first part of "Make it work, make it elegant, make it
+	fast".
+	</p>
+	
+	<a href="/project-files/FaceRecognition.tar.gz">Source code</a>
+	
+	<p>
+	-- Adam
+	</p>
 	
 	<h2>Eldog's Android Game: RGBRPG</h2>
 	<center><iframe src="http://player.vimeo.com/video/20141173" width="400" height="300" frameborder="0"></iframe><br />
