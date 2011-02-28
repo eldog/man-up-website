@@ -14,7 +14,7 @@ get_path = utils.path_getter(__file__)
 
 class BaseHandler(RequestHandler):
     login_required = False
-    tag_line = 'Next meeting: 24/2/2011 LF15 5pm'
+    tag_line = 'Next meeting: 3/3/2011 LF15 5pm'
     title = None
     
     def render_template(self, template_name, template_dict=None):
