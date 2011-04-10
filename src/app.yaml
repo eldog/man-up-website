@@ -43,9 +43,10 @@ handlers:
     script: main.py
     login: required
     
-  - url: /tasks/newsletter
+  - url: /task/newsletter
     script: main.py
     login: admin
+    auth_fail_action: unauthorized
   
   # Other
   - url: /.*

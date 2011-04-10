@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
 {% block main %}
+    <h1>Events</h1>
+    <p>This is a test app that will retrieve a list of events from the Man-UP
+    google calendar between specified dates. You can also have it emailed to 
+    you if you are logged in.</p>
+    {{ errors.date_error }}
     <form action="/newsletter" method="post">
 		Start Date <input type="text" name="start_date" id="start_date" />
 		<script>
@@ -11,7 +16,11 @@
 		<script>
 		    $('#end_date').datepicker({dateFormat: 'yy-mm-dd'})
 	    </script>
+	    {% if email %}
 	    <br />
+	    <input type="checkbox" name="email" value="email" /> Email me a copy (will be sent to {{ email }}) 
+	    <br />
+	    {% endif %}
 		<input type="submit"/>
     </form>
     {% for entry in event_feed.entry %}

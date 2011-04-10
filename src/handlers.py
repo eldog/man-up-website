@@ -16,7 +16,7 @@ get_path = utils.path_getter(__file__)
 
 class BaseHandler(RequestHandler):
     login_required = False
-    tag_line = 'Next meeting: 7/4/2011 LF15 5pm'
+    tag_line = 'Man-UP hack: 14/4/2011 LF15 5pm'
     title = None
     
     def render_template(self, template_name, template_dict=None):
@@ -249,33 +249,65 @@ class NewsHandler(BaseHandler):
         self.render_template('news')
         
 class NewsLetterHandler(BaseHandler):
+    _post_fields = frozenset(('start_date', 'end_date'))
     def post(self):
         post =  self.request.POST
-        if post['start_date'] and post['end_date']:
-            self.display_results(post['start_date'], post['end_date'])
-                
-    def get(self):
-        self.render_template('newsletter')
+        if 'start_date' in post.keys() and 'end_date' in post.keys():
+            current_user = users.get_current_user()
+            # Validate our dates
+            start_date = post['start_date']
+            end_date = post['end_date']
+            email = 'email' in post.keys()
+            try:
+                datetime.datetime.strptime(start_date, '%Y-%m-%d')
+                datetime.datetime.strptime(end_date, '%Y-%m-%d')
+            except ValueError:
+                errors_dict = { 'date_error' : 'Invalid dates' }
+                self.render_template('newsletter', {'errors' : errors_dict})
+                return
+            event_feed = self.get_feed(post['start_date'], post['end_date'])
+            if email and current_user and current_user.email():
+                self.email_newsletter(event_feed, target=current_user.email())
+            self.display_results(event_feed)
+        else:
+            errors_dict = { 'date_error' : 'please enter start and end dates' }
+            self.get(temp_dict={'errors' : errors_dict})
+                   
+    def get(self, temp_dict=None):
+        user = users.get_current_user()
+        email = None
+        if user:
+            email = user or user.email()
+        if not temp_dict:
+            temp_dict = {'email' : email}
+        else:
+            temp_dict['email'] = email
+        if temp_dict:
+            self.render_template('newsletter', temp_dict)
         
-    def email_newsletter(self, template_dict):
-        template_path = get_path(
+    def email_newsletter(self, template_dict, target='lloyd.w.henning@gmail.com'):
+        email_html_template_path = get_path(
             os.path.join('templates', 'newsletter_email.html'))
-        email_template = template.render(template_path, {'event_feed' : template_dict})
+        email_body_template_path = get_path(
+            os.path.join('templates', 'newsletter_email_plain.txt'))
+        email_html = template.render(email_html_template_path, {'event_feed' : template_dict})
+        email_body = template.render(email_body_template_path, {'event_feed' : template_dict})
         send_mail(
                 sender='manchester.up@gmail.com',
-                to='lloyd.w.henning@gmail.com',
+                to=target,
                 subject='Newsletter',
-                body=email_template)
+                body=email_body,
+                html=email_html)
     
-    def display_results(self, start, end):
-        event_feed = self.get_feed(start, end) 
-        self.render_template('newsletter', {'event_feed' : event_feed})
+    def display_results(self, event_feed): 
+        self.get(temp_dict={'event_feed' : event_feed})
     
     def get_feed(self, start, end):
         calendar = ManUpCalendar()
         return calendar.get_feed(start_date=start, end_date=end)
         
 class NewsLetterTaskHandler(NewsLetterHandler):
+    login_required = True
     def get(self):
         now = datetime.datetime.now()
         this_time_next_week = now + datetime.timedelta(weeks=1)
