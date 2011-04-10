@@ -293,7 +293,7 @@ class NewsLetterHandler(BaseHandler):
         email_html = template.render(email_html_template_path, {'event_feed' : template_dict})
         email_body = template.render(email_body_template_path, {'event_feed' : template_dict})
         send_mail(
-                sender='manchester.up@gmail.com',
+                sender='lloyd.w.henning@gmail.com',
                 to=target,
                 subject='Newsletter',
                 body=email_body,
