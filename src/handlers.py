@@ -10,6 +10,8 @@ import utils
 
 from models import Award, Badge, Hacker, NewsArticle, Team
 
+from manupcalendar import ManUpCalendar
+
 get_path = utils.path_getter(__file__)
 
 class BaseHandler(RequestHandler):
@@ -182,7 +184,6 @@ class CalendarHandler(BaseHandler):
     def get(self):
         self.render_template('calendar')
 
-
 class ContactHandler(BaseHandler):
     def get(self):
         self.render_template('contact')
@@ -246,6 +247,40 @@ class MessagesHandler(BaseHandler):
 class NewsHandler(BaseHandler):
     def get(self):
         self.render_template('news')
+        
+class NewsLetterHandler(BaseHandler):
+    def post(self):
+        post =  self.request.POST
+        if post['start_date'] and post['end_date']:
+            self.display_results(post['start_date'], post['end_date'])
+                
+    def get(self):
+        self.render_template('newsletter')
+        
+    def email_newsletter(self, template_dict):
+        template_path = get_path(
+            os.path.join('templates', 'newsletter_email.html'))
+        email_template = template.render(template_path, {'event_feed' : template_dict})
+        send_mail(
+                sender='manchester.up@gmail.com',
+                to='lloyd.w.henning@gmail.com',
+                subject='Newsletter',
+                body=email_template)
+    
+    def display_results(self, start, end):
+        event_feed = self.get_feed(start, end) 
+        self.render_template('newsletter', {'event_feed' : event_feed})
+    
+    def get_feed(self, start, end):
+        calendar = ManUpCalendar()
+        return calendar.get_feed(start_date=start, end_date=end)
+        
+class NewsLetterTaskHandler(NewsLetterHandler):
+    def get(self):
+        now = datetime.datetime.now()
+        this_time_next_week = now + datetime.timedelta(weeks=1)
+        self.email_newsletter(self.get_feed(now.strftime('%Y-%m-%d'), 
+                              this_time_next_week.strftime('%Y-%m-%d')))
 
 
 class TalksHandler(BaseHandler):

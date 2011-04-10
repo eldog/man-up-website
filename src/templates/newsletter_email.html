@@ -1,0 +1,15 @@
+<html>
+    <body>
+    {% for entry in event_feed.entry %}
+        {% for a_when in entry.when %}
+            <h2>{{ entry.title.text }}</h2>
+            <p><b>Starts:</b> {{ a_when.start }}</p>
+            <p><b>Ends:</b> {{ a_when.end }}</p>
+            {% for a_where in entry.where %}
+                <p><b>Location:</b> {{ a_where.value }}</p>
+            {% endfor %}
+            <p>{{ entry.content.text }}</p>
+        {% endfor %} 
+    {% endfor %}
+    </body>
+</html>

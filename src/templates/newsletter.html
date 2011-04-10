@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <form action="/newsletter" method="post">
+		Start Date <input type="text" name="start_date" id="start_date" />
+		<script>
+		    $('#start_date').datepicker({dateFormat: 'yy-mm-dd'});
+	    </script>
+	    <br />
+		End Date <input type="text" name="end_date" id="end_date" />
+		<script>
+		    $('#end_date').datepicker({dateFormat: 'yy-mm-dd'})
+	    </script>
+	    <br />
+		<input type="submit"/>
+    </form>
+    {% for entry in event_feed.entry %}
+        {% for a_when in entry.when %}
+            <h2>{{ entry.title.text }}</h2>
+            <p><b>Starts:</b> {{ a_when.start }}</p>
+            <p><b>Ends:</b> {{ a_when.end }}</p>
+            {% for a_where in entry.where %}
+                <p><b>Location:</b> {{ a_where.value }}</p>
+            {% endfor %}
+            <p>{{ entry.content.text }}</p>
+        {% endfor %} 
+    {% endfor %}
+{% endblock %}
