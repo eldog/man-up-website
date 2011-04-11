@@ -21,6 +21,9 @@ handlers:
   
   - url: /stylesheets
     static_dir: static/stylesheets
+    
+  - url: /jqueryui
+    static_dir: jqueryui
   
   # Admin requests
   - url: /admin
@@ -39,6 +42,11 @@ handlers:
   - url: /login
     script: main.py
     login: required
+    
+  - url: /task/newsletter
+    script: main.py
+    login: admin
+    auth_fail_action: unauthorized
   
   # Other
   - url: /.*

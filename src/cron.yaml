@@ -1,0 +1,4 @@
+cron:
+- description: weekly email job
+  url: /tasks/newsletter
+  schedule: every 24 hours
