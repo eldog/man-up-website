@@ -1,4 +1,8 @@
 cron:
 - description: weekly email job
-  url: /tasks/newsletter
+  url: /task/newsletter
+  schedule: every 24 hours
+  
+- description: meetings update job
+  url: /task/meeting
   schedule: every 24 hours

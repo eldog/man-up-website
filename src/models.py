@@ -1,3 +1,5 @@
+import datetime
+
 from google.appengine.api import users
 from google.appengine.ext import db
 
@@ -28,6 +30,20 @@ class Hacker(db.Model):
             hacker = Hacker(user_id=user_id, handle=user_id)
             hacker.put()
         return hacker
+
+class Meeting(db.Model):
+    name = db.StringProperty(required=True)
+    start_date = db.DateTimeProperty(required=True)
+    
+    @classmethod
+    def get_next_meeting(cls):
+        # Until the day we have multiple events on the sameday this will
+        # work.
+        now = datetime.datetime.today()
+        start_of_today = datetime.datetime(now.year, now.month, now.day)
+        meetings = cls.all()
+        meetings.filter('start_date >=', start_of_today)
+        return meetings.get()
 
 class Badge(db.Model):
     name = db.StringProperty(required=True)

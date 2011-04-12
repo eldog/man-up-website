@@ -47,6 +47,11 @@ handlers:
     script: main.py
     login: admin
     auth_fail_action: unauthorized
+    
+  - url: /task/meeting
+    script: main.py
+    login: admin
+    auth_fail_action: unauthorized
   
   # Other
   - url: /.*

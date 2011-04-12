@@ -29,6 +29,10 @@ class ManUpCalendar():
         # edit the dates so they look right...
         for entry in feed.entry:
             for when in entry.when:
+                # remember their old forms for adding them to the db if necessary
+                when.start_raw = when.start
+                when.end_raw = when.end
+                # make them pretty
                 when.start = self.get_date(when.start)
                 when.end = self.get_date(when.end)
         return feed

@@ -8,7 +8,7 @@ from google.appengine.ext.webapp import RequestHandler, template
 
 import utils
 
-from models import Award, Badge, Hacker, NewsArticle, Team
+from models import Award, Badge, Hacker, NewsArticle, Meeting, Team
 
 from manupcalendar import ManUpCalendar
 
@@ -16,10 +16,16 @@ get_path = utils.path_getter(__file__)
 
 class BaseHandler(RequestHandler):
     login_required = False
-    tag_line = 'Man-UP hack: 14/4/2011 LF15 5pm'
+    
     title = None
     
     def render_template(self, template_name, template_dict=None):
+        next_meeting = Meeting.get_next_meeting()
+        if next_meeting:
+            tag_line = '%s: %s' % (next_meeting.name, next_meeting.start_date)
+        else:
+            tag_line = 'Evening Hack: 14/4/2011 5pm LF15'
+    
         if template_dict is None:
             template_dict = {}
         
@@ -38,7 +44,7 @@ class BaseHandler(RequestHandler):
         defaults = {
             'user': user,
             'log_url': url_creator(redirect_target),
-            'tag_line': self.tag_line,
+            'tag_line': tag_line,
             'title': self.title
         }
         
@@ -215,6 +221,17 @@ class LoginHandler(BaseHandler):
 class MasterclassHandler(BaseHandler):
     def get(self):
         self.render_template('masterclass')
+        
+class MeetingHandler(BaseHandler):
+    def get(self):
+        calendar = ManUpCalendar()
+        feed = calendar.get_feed()
+        for entry in feed.entry:
+            for a_when in entry.when:
+                meeting = Meeting(name=entry.title.text, 
+                                  start_date=datetime.datetime.strptime(
+                                  a_when.start_raw, '%Y-%m-%dT%H:%M:%S.000Z'))
+                meeting.put()
 
 class MembersHandler(BaseHandler):
     def get(self):
@@ -285,7 +302,8 @@ class NewsLetterHandler(BaseHandler):
         if temp_dict:
             self.render_template('newsletter', temp_dict)
         
-    def email_newsletter(self, template_dict, target='lloyd.w.henning@gmail.com'):
+    def email_newsletter(self, template_dict, 
+                         target='lloyd.w.henning@gmail.com, petersutton2009@gmail.com'):
         email_html_template_path = get_path(
             os.path.join('templates', 'newsletter_email.html'))
         email_body_template_path = get_path(
