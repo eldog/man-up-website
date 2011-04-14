@@ -35,7 +35,8 @@ application = WSGIApplication(
      ('/task/meeting'      , MeetingHandler),
      ('/talk'              , TalksHandler),
      ('/teams'             , TeamsHandler),
-     ('/team_submission'   , TeamSubmissionHandler)),
+     ('/team_submission'   , TeamSubmissionHandler),
+     ('/*'                 , FileNotFoundHandler)),
     debug=True)
 
 def main(argv=None):

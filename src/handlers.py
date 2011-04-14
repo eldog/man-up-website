@@ -198,6 +198,10 @@ class FAQHandler(BaseHandler):
     def get(self):
         self.render_template('faq')
         
+class FileNotFoundHandler(BaseHandler):
+    def get(self):
+        self.render_template('404')
+        
 class HackathonHandler(BaseHandler):
     def get(self):
         self.render_template('hack-a-thon')
@@ -260,7 +264,10 @@ class MemberHandler(BaseHandler):
 class MessagesHandler(BaseHandler):
     def get(self, message_index=None):
         message_path = 'static/messages/%s.html' % message_index
-        self.response.out.write(open(message_path).read())
+        try
+            self.response.out.write(open(message_path).read())
+        except (IOError):
+            self.render_template('404')
 
 class NewsHandler(BaseHandler):
     def get(self):
