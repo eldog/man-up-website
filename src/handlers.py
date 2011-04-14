@@ -264,9 +264,9 @@ class MemberHandler(BaseHandler):
 class MessagesHandler(BaseHandler):
     def get(self, message_index=None):
         message_path = 'static/messages/%s.html' % message_index
-        try
+        try:
             self.response.out.write(open(message_path).read())
-        except (IOError):
+        except IOError, (errno, strerror):          
             self.render_template('404')
 
 class NewsHandler(BaseHandler):
