@@ -4,6 +4,8 @@ Man-UP
 Manchester Ultimate Programming Web App for Google App Engine
 -------------------------------------------------------------
 
+Hello world
+
 This is a web app designed to host information on members of Manchester
 Ultimate Programming society.
 
