@@ -15,7 +15,7 @@ class ManUpCalendar():
 
     def get_date(self, dt):
         return datetime.datetime.strptime(
-            dt, '%Y-%m-%dT%H:%M:%S.000Z').strftime(
+            dt, '%Y-%m-%dT%H:%M:%S.000').strftime(
                 '%a, %d %B, %H:%M') 
 
     def get_feed(self, start_date='2011-01-01', end_date='2011-07-01'):
@@ -33,17 +33,17 @@ class ManUpCalendar():
                 when.start_raw = when.start
                 when.end_raw = when.end
                 # make them pretty
-                when.start = self.get_date(when.start)
-                when.end = self.get_date(when.end)
+                #when.start = self.get_date(when.start)
+                #when.end = self.get_date(when.end)
         return feed
         
     def print_calendar(self, start_date='2011-01-01', end_date='2011-07-01'):
-        feed = get_feed()
+        feed = self.get_feed()
         for entry in feed.entry:
             print entry.title.text
             for a_when in entry.when:
-                print '\tStart time: %s' % self.get_date(a_when.start)
-                print '\tEnd time:   %s' % self.get_date(a_when.end)
+                print '\tStart time: %s' % a_when.start#self.get_date(a_when.start)
+                print '\tEnd time:   %s' % a_when.end#self.get_date(a_when.end)
             print '\t%s' % entry.where[0].value
             print '\t%s' % entry.content.text
 

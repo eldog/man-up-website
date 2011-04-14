@@ -22,7 +22,7 @@ class BaseHandler(RequestHandler):
     def render_template(self, template_name, template_dict=None):
         next_meeting = Meeting.get_next_meeting()
         if next_meeting:
-            tag_line = '%s: %s' % (next_meeting.name, next_meeting.start_date)
+            tag_line = '%s: %s, %s' % (next_meeting.name, next_meeting.start_date, next_meeting.location)
         else:
             tag_line = 'Evening Hack: 14/4/2011 5pm LF15'
     
@@ -228,10 +228,11 @@ class MeetingHandler(BaseHandler):
         feed = calendar.get_feed()
         for entry in feed.entry:
             for a_when in entry.when:
-                meeting = Meeting(name=entry.title.text, 
-                                  start_date=datetime.datetime.strptime(
-                                  a_when.start_raw, '%Y-%m-%dT%H:%M:%S.000Z'))
-                meeting.put()
+                date_string = a_when.start_raw[:19]
+                date = datetime.datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%S')
+                for where in entry.where:
+                    meeting = Meeting(name=entry.title.text, start_date=date, location=where.value)
+                    meeting.put()
 
 class MembersHandler(BaseHandler):
     def get(self):

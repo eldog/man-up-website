@@ -34,6 +34,7 @@ class Hacker(db.Model):
 class Meeting(db.Model):
     name = db.StringProperty(required=True)
     start_date = db.DateTimeProperty(required=True)
+    location = db.StringProperty(required=True)
     
     @classmethod
     def get_next_meeting(cls):
@@ -41,9 +42,7 @@ class Meeting(db.Model):
         # work.
         now = datetime.datetime.today()
         start_of_today = datetime.datetime(now.year, now.month, now.day)
-        meetings = cls.all()
-        meetings.filter('start_date >=', start_of_today)
-        return meetings.get()
+        return cls.all().filter('start_date >=', start_of_today).get()
 
 class Badge(db.Model):
     name = db.StringProperty(required=True)
