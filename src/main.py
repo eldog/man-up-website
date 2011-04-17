@@ -29,14 +29,14 @@ application = WSGIApplication(
      ('/masterclass'       , MasterclassHandler),
      ('/members'           , MembersHandler),
      ('/members/([^/]+)'   , MemberHandler),
-     ('/messages/(\d+)'    , MessagesHandler),
+     ('/messages/([^/]+)'  , MessagesHandler),
      ('/newsletter'        , NewsLetterHandler),
      ('/task/newsletter'   , NewsLetterTaskHandler),
      ('/task/meeting'      , MeetingHandler),
      ('/talk'              , TalksHandler),
      ('/teams'             , TeamsHandler),
      ('/team_submission'   , TeamSubmissionHandler),
-     ('/([^/]+)'           , FileNotFoundHandler)),
+     ('/(.+)'              , FileNotFoundHandler)),
     debug=True)
 
 def main(argv=None):

@@ -4,7 +4,11 @@
 
 <h1>Page not found</h1>
 <p>
-This is not the page you were looking for (with probability 1 - &delta;).
+This is not the page you were looking for (with probability 1 - &delta;). <br />
+Either you are confused, or our webserver is. If its the latter, please stop trying to confuse it, it gets upset.
+</p>
+<p>
+You were trying to go to - {% if url %} {{ url }} {% endif %} - but failed.
 </p>
 {% endblock %}
 		
