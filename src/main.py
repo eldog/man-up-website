@@ -8,7 +8,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 
 from handlers import AccountHandler, AdminHandler, BadgeHandler, \
     BadgesHandler, BadgeApplicationHandler, CalendarHandler, ContactHandler, \
-    FAQHandler, HackathonHandler, LoginHandler, ManualHandler, \
+    FAQHandler, FileNotFoundHandler, HackathonHandler, LoginHandler, ManualHandler, \
     MasterclassHandler, MemberHandler, MembersHandler, \
     MessagesHandler, MeetingHandler, NewsHandler, NewsLetterHandler, NewsLetterTaskHandler, \
     TalksHandler, TeamsHandler, TeamSubmissionHandler
@@ -36,7 +36,7 @@ application = WSGIApplication(
      ('/talk'              , TalksHandler),
      ('/teams'             , TeamsHandler),
      ('/team_submission'   , TeamSubmissionHandler),
-     ('/*'                 , FileNotFoundHandler)),
+     ('/([^/]+)'           , FileNotFoundHandler)),
     debug=True)
 
 def main(argv=None):

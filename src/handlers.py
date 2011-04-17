@@ -199,7 +199,7 @@ class FAQHandler(BaseHandler):
         self.render_template('faq')
         
 class FileNotFoundHandler(BaseHandler):
-    def get(self):
+    def get(self,handlerName=''):
         self.render_template('404')
         
 class HackathonHandler(BaseHandler):
@@ -268,6 +268,8 @@ class MessagesHandler(BaseHandler):
             self.response.out.write(open(message_path).read())
         except IOError, (errno, strerror):          
             self.render_template('404')
+        #finally:
+        #	close(message_path)
 
 class NewsHandler(BaseHandler):
     def get(self):
