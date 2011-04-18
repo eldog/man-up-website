@@ -17,8 +17,10 @@ Badges are what earn members of MAN-UP XP. They are the rewards that are given f
 			<th>Description</th>
 			<th><a href="/badges?order=receivers"># awarded</a></th>
 		</tr>
+		{% autoescape off %}
 		{% for badge in badges %}
 			<tr>
+			
 				<td><a href="/badges/{{ badge.name }}"><img src="{{ badge.image }}"/></a></td>
 				<td><a href="/badges/{{ badge.name }}">{{ badge.name }}</td>
 				<td>{{ badge.value }}</td>
@@ -27,6 +29,7 @@ Badges are what earn members of MAN-UP XP. They are the rewards that are given f
 				<td>{{ badge.awards.count }}</td>
 			</tr>
 		{% endfor %}
+		{% endautoescape %}
 	</table>
 {% endblock %}
 		

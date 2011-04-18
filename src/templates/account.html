@@ -5,11 +5,15 @@
 		<p>{{ error }}</p>
 	{% endif %}
 	<h3>Update Profile</h3>
+	<div class="user_info">
 	<form action="/account" method="post">
-		<label for="handle">Handle</label>: <input type="text" id="handle" name="handle" value="{{ user.handle }}"/><br />
-		<label for="email">Email</label> (optional): <input type="text" id="email" name="email" value="{{ user.email }}" /><br />
-		<label for="real_name">Real name (optional)</label>: <input type="text" id="real_name" name="real_name" value="{{ user.real_name }}"/><br />
-		<label for="bio">Bio (optional)</label>: <input type="text" id="bio" name="bio" value="{{ user.bio }}"/><br />
-		<input type="submit" value="Submit">
+		<table>
+			<tr><td><label for="handle">Handle</label>:</td><td> <input type="text" id="handle" name="handle" value="{{ user.handle }}"/></td></tr>
+			<tr><td><label for="email">Email(optional)</label>:</td><td> <input type="text" id="email" name="email" value="{{ user.email }}" /></td></tr>
+			<tr><td><label for="real_name">Real name (optional)</label>:</td><td> <input type="text" id="real_name" name="real_name" value="{{ user.real_name }}"/></td></tr>
+			<tr><td><label for="bio">Bio (optional)</label>:</td><td> <input type="text" id="bio" name="bio" value="{{ user.bio }}"/></td></tr>
+			<tr><td><input type="submit" value="Submit"></td></tr>
+		</table>
 	</form>
+	</div>
 {% endblock %}

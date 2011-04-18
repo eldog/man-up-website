@@ -4,23 +4,28 @@
 	<p>THIS IS THE GOD PAGE. I'VE NOT WRITTEN ANY SAFETY INTO THIS, SO BE CAREFUL.</P>
 	
 	<h2>News Article</h2>
+	<div class="admin_news">
 	<form action="/admin" method="post">
 		<input type="hidden" name="kind" value="article"/>
-		Title: <input type="text" name="title" /><br />
-		Author: <input type="text" name="author" /><br />
-		Body: <br />
-		<textarea name="body"></textarea><br/>
+		<table>
+			<tr><td>Title:</td> <td> <input type="text" name="title" /></td></tr>
+			<tr><td>Author:</td> <td> <input type="text" name="author" /></td></tr>
+			<!--<tr><td>Date:</td> <td> <input type="text" name="date" /></td></tr>-->
+			<tr><td>Body:</td></tr>
+		</table>
+		<textarea name="body"></textarea>
 		<input type="submit">Submit</input>
 	</form>
+	</div>
 	
-	<h2>Bagde</h2>
+	<h2>Badge</h2>
 	<form action="/admin" method="post">
 		<input type="hidden" name="kind" value="badge"/>
 		Name: <input type="text" name="name"/><br/>
 		Desc: <input type="text" name="description"/><br/>
 		Cate: <input type="text" name="category"/><br/>
 		Image: <input type="text" name="image"/><br/>
-		value: <input type="text" name="value"/><br/>	
+		Value: <input type="text" name="value"/><br/>	
 		<input type="submit">Submit</input>
 	</form>
 	

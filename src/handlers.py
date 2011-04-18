@@ -5,6 +5,7 @@ import datetime
 from google.appengine.api import users
 from google.appengine.api.mail import send_mail
 from google.appengine.ext.webapp import RequestHandler, template
+from google.appengine.ext.db import GqlQuery
 
 import utils
 
@@ -198,6 +199,10 @@ class FAQHandler(BaseHandler):
     def get(self):
         self.render_template('faq')
         
+class FileNotFoundHandler(BaseHandler):
+    def get(self,handler_name=''):
+        self.render_template('404',{'url' : handler_name})
+        
 class HackathonHandler(BaseHandler):
     def get(self):
         self.render_template('hack-a-thon')
@@ -259,12 +264,26 @@ class MemberHandler(BaseHandler):
 
 class MessagesHandler(BaseHandler):
     def get(self, message_index=None):
-        message_path = 'static/messages/%s.html' % message_index
-        self.response.out.write(open(message_path).read())
+    	if message_index==None:
+			self.render_template('message_list')
+    	else:
+        	message_path = 'static/messages/%s.html' % message_index
+        	try:
+				cur_file = None
+				cur_file = open(message_path)
+				self.response.out.write(cur_file.read())
+        	except IOError, (errno, strerror):          
+				self.render_template('404', {'url' : 'message number ' + message_index})
+        	finally:
+        		if cur_file:
+					cur_file.close()
 
 class NewsHandler(BaseHandler):
     def get(self):
-        self.render_template('news')
+    	news_list = GqlQuery("SELECT * FROM NewsArticle ORDER BY date DESC").fetch(5);
+
+    	#news_list = list(NewsArticle.all().order('-date'))
+        self.render_template('news', {'news_list': news_list})
         
 class NewsLetterHandler(BaseHandler):
     _post_fields = frozenset(('start_date', 'end_date'))
