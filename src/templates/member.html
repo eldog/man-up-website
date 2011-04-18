@@ -3,6 +3,7 @@
 {% block main %}
 	{% if hacker %}
 		<h2>{{ hacker.handle }}</h2> 
+        {% gravatar hacker.email %}
 		<p>XP: {{ hacker.score }} | Awards: {{ hacker.awards.count }}
 		{% if hacker.real_name %}
 		 | Real name: {{ hacker.real_name }}

@@ -14,6 +14,8 @@ from manupcalendar import ManUpCalendar
 
 get_path = utils.path_getter(__file__)
 
+template.register_template_library('templatetags.customtags')
+
 class BaseHandler(RequestHandler):
     login_required = False
     
