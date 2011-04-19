@@ -1,8 +1,6 @@
 {% extends "base.html" %} 
 {% block main %}
 
-	<!--<h1>News</h1>-->
-
 	{% for newsitem in news_list %}
 		<div class="newsitem">
 			<h1>{{ newsitem.title }}</h1>
@@ -10,9 +8,8 @@
 			{% autoescape off %}
 				{{ newsitem.body }}
 			{% endautoescape %}
-			<p> {{ newsitem.author }} </p>
+			<p>{{ newsitem.author }}</p>
 		</div>
 	{% endfor %}
-
 
 {% endblock %}

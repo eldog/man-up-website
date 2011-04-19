@@ -10,11 +10,15 @@
 		<table>
 			<tr><td>Title:</td> <td> <input type="text" name="title" /></td></tr>
 			<tr><td>Author:</td> <td> <input type="text" name="author" /></td></tr>
-			<!--<tr><td>Date:</td> <td> <input type="text" name="date" /></td></tr>-->
+			<tr><td>Date</td> <td><input type="text" name="date" id="date" />
+				<script>
+		    		$('#date').datepicker({dateFormat: 'yy-mm-dd'})
+	    		</script>
+	    	</td></tr>
 			<tr><td>Body:</td></tr>
 		</table>
 		<textarea name="body"></textarea>
-		<input type="submit">Submit</input>
+		<input type="submit" />
 	</form>
 	</div>
 	
@@ -26,7 +30,7 @@
 		Cate: <input type="text" name="category"/><br/>
 		Image: <input type="text" name="image"/><br/>
 		Value: <input type="text" name="value"/><br/>	
-		<input type="submit">Submit</input>
+		<input type="submit" />
 	</form>
 	
 	<h2>Award</h2>
@@ -43,7 +47,7 @@
 			{% endfor %}
 		</select><br/>
 		Proof: <input type="text" name="proof"/><br />
-		<input type="submit">Submit</input>
+		<input type="submit" />
 	</form>
 	
 {% endblock %}
