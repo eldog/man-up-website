@@ -13,11 +13,11 @@ Members of MAN-UP are listed and their handle is displayed along with their curr
 		<th>Handle</th>
 		<th>XP</th>
 	</tr>
-	{% for ranked_hacker in hackers %}
+	{% for ranked_member in members %}
 		<tr>
-			<td>{{ ranked_hacker.0 }}</td>
-			<td><a href="members/{{ ranked_hacker.1.handle }}">{{ ranked_hacker.1.handle }}</a></td>
-			<td>{{ ranked_hacker.1.score }}</td>
+			<td>{{ ranked_member.0 }}</td>
+			<td><a href="members/{{ ranked_member.1.handle }}">{{ ranked_member.1.handle }}</a></td>
+			<td>{{ ranked_member.1.score }}</td>
 		</tr>
 	{% endfor %}
 </table>

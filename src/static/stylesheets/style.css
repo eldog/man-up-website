@@ -105,8 +105,9 @@ th {
     display: none;
 }
 
-table {
+.form {
     border-spacing: 0px;
+    width: auto;
 }
 
 
@@ -123,15 +124,18 @@ input, textarea, select {
     border-width: 3px;
     border-style: double;
     border-color: #111111;
-    padding: 0px;
+    padding: 1px;
     margin: 0px;
 }
 
 select {
-    width: 255px;
+    width: 257px;
 }
 
 input[type=submit] {
-    padding: 1px;
     width: auto;
+}
+
+input[type=submit]:hover {
+    cursor: pointer;
 }

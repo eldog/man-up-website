@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 
 {% block main %}
-	{% if hacker %}
-		<h2>{{ hacker.handle }}</h2> 
-        {% gravatar hacker.email %}
-		<p>XP: {{ hacker.score }} | Awards: {{ hacker.awards.count }}
-		{% if hacker.real_name %}
-		 | Real name: {{ hacker.real_name }}
+	{% if member %}
+		<h2>{{ member.handle }}</h2> 
+        {% gravatar member.email %}
+		<p>XP: {{ member.score }} | Awards: {{ member.awards.count }}
+		{% if member.real_name %}
+		 | Real name: {{ member.real_name }}
 		{% endif %}
-		{% if hacker.email %}
-		 | Email: {{hacker.email}} 
+		{% if member.email %}
+		 | Email: {{member.email}} 
 		 {% endif %}</p>
-		{% if hacker.bio %}
+		{% if member.bio %}
 			<h3>Bio</h3>
-			<p>{{ hacker.bio }}</p>
+			<p>{{ member.bio }}</p>
 		{% endif %}
 		<table>
 			<tr>
@@ -24,10 +24,10 @@
 				<th>Proof</th>
 				<th>Awarded</th>
 			</tr>
-			{% for award in hacker.awards %}
+			{% for award in member.awards %}
 				<tr>
-					<td><a href="/badges/{{ award.badge.name }}"><img src="{{ award.badge.image }}"/></a></td>
-					<td><a href="/badges/{{ award.badge.name }}">{{ award.badge.name }}</a></td>
+					<td><a href="/badges/{{ award.badge.key.id }}"><img src="{{ award.badge.image }}"/></a></td>
+					<td><a href="/badges/{{ award.badge.key.id }}">{{ award.badge.name }}</a></td>
 					<td>{{ award.badge.value }}</td>
 					<td>{{ award.badge.description }}</td>
 					<td>{% if award.proof %}<a href="{{ award.proof }}">PROOF</a>{% endif %}</td>
@@ -35,6 +35,19 @@
 				</tr>
 			{% endfor %}
 		</table>
+        <p>Talks: </p>
+        {% for talk in member.talks %}
+            <h2>{{ talk.title }}</h2>
+            <p>Meeting: {{ talk.meeting.name }}</p>
+            <p>{{ talk.meeting.start_date|date:"d/m/Y" }}</p>
+            {% if talk.video %}
+            <center>
+                <iframe src="{{ talk.video }}" width="400" height="300" frameborder="0"></iframe>
+                <br />
+            </center>
+            {% endif %}
+            <div>{{ talk.description|safe}}</div>
+        {% endfor %}
 	{% else %}
 		<p>No such member</p>
 	{% endif %}

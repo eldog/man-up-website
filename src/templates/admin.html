@@ -14,7 +14,7 @@
         <h2>News Article</h2>
         <form action="/admin" method="post">
             <input type="hidden" name="kind" value="article"/>
-            <table>
+            <table class="form">
                 <tr>
                     <td>Title:</td> 
                     <td><input type="text" name="title" /></td>
@@ -29,7 +29,7 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><input type="submit" /></td>
+                    <td><input type="submit" value="Submit" /></td>
                 </tr>
             </table>
         </form>
@@ -39,7 +39,7 @@
         <h2>Badge</h2>
         <form action="/admin" method="post">
             <input type="hidden" name="kind" value="badge"/>
-            <table>
+            <table class="form">
                 <tr>
                     <td>Name:</td>
                     <td><input type="text" name="name"/></td>
@@ -62,7 +62,7 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><input type="submit" /></td>
+                    <td><input type="submit" value="Submit" /></td>
                 </tr>
             </table>
         </form>
@@ -72,11 +72,11 @@
         <h2>Award</h2>
         <form action="/admin" method="post">
             <input type="hidden" name="kind" value="award"/>
-            <table>
+            <table class="form">
                 <tr>
                     <td>Member:</td> 
                     <td>
-                        <select name="hackers" size="20" multiple="multiple">
+                        <select name="members" size="20" multiple="multiple">
                             {% for member in members %}
                                 <option value="{{ member.key.id }}">{{ member.handle }}</option>
                             {% endfor %}
@@ -99,9 +99,7 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td>
-                        <input type="submit" />
-                    </td>
+                    <td><input type="submit" value="Submit" /></td>
                 </tr>
             </table>
         </form>
@@ -111,7 +109,7 @@
         <h2>Talk</h2>
         <form action="/admin" method="post">
             <input type="hidden" name="kind" value="talk"/>
-            <table>
+            <table class="form">
                 <tr>
                     <td>Member:</td> 
                     <td>
@@ -146,9 +144,7 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td>
-                        <input type="submit" />
-                    </td>
+                    <td><input type="submit" value="Submit" /></td>
                 </tr>
             </table>
         </form>

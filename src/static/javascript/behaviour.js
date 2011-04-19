@@ -4,4 +4,6 @@ $(document).ready(function() {
         $('.tab-page').hide();
         $('#' + $(this).attr('id') + '-tab-page').show();
     });
+    $('#start_date').datepicker({dateFormat: 'yy-mm-dd'});
+    $('#end_date').datepicker({dateFormat: 'yy-mm-dd'});
 });

@@ -4,18 +4,30 @@
 	{% if message %}
 		<p>{{ message }}</p>
 	{% else %}
-		<form action="/badge_application" method="post">
-			<label for="badge">Badge: </label><select id="badge" name="badge">
-				{% for badge in badges %}
-					<option {% ifequal badge.name selected_badge %}selected{% endifequal %}>
-						{{ badge.name }}
-					</option>
-				{% endfor %}
-			</select><br />
-			<label for="proof">Links to proof:</label><br />
-			<textarea id="proof" name="proof"></textarea><br />
-			<input type="submit" />
-		</form>
+        <h3>Update Profile</h3>
+        <form action="/badge_application" method="post">
+            <table class="form">
+                <tr>
+                    <td>Badge: </td>
+                    <td>
+                        <select id="badge" name="badge">
+                        {% for badge in badges %}
+                            <option {% ifequal badge.name selected_badge %}selected{% endifequal %}>
+                                {{ badge.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Links to proof:</td>
+                    <td><textarea id="proof" name="proof"></textarea></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" /></td>
+                </tr>
+            </table>
+        </form>
 	{% endif %}
-
 {% endblock %}

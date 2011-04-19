@@ -22,7 +22,7 @@
 			</tr>
 			{% for award in badge.awards %}
 				<tr>
-					<td><a href="/members/{{ award.hacker.handle }}"/>{{ award.hacker.handle }}</a></td>
+					<td><a href="/members/{{ award.member.handle }}"/>{{ award.member.handle }}</a></td>
 					<td>{{ award.date }}</td>
 				</tr>
 			{% endfor %}

@@ -6,10 +6,27 @@
 	{% endif %}
 	<h3>Update Profile</h3>
 	<form action="/account" method="post">
-		<label for="handle">Handle</label>: <input type="text" id="handle" name="handle" value="{{ user.handle }}"/><br />
-		<label for="email">Email</label> (optional): <input type="text" id="email" name="email" value="{{ user.email }}" /><br />
-		<label for="real_name">Real name (optional)</label>: <input type="text" id="real_name" name="real_name" value="{{ user.real_name }}"/><br />
-		<label for="bio">Bio (optional)</label>: <input type="text" id="bio" name="bio" value="{{ user.bio }}"/><br />
-		<input type="submit" value="Submit">
+        <table class="form">
+            <tr>
+                <td>Handle:</td> 
+                <td><input type="text" name="handle" value="{{ user.handle }}"/></td>
+            </tr>
+            <tr>
+                <td>Email (optional):</td>
+                <td><input type="text" name="email" value="{{ user.email }}" /></td>
+            </tr>
+            <tr>
+                <td>Real name (optional):</td>
+                <td><input type="text" name="real_name" value="{{ user.real_name }}"/></td>
+            </tr>
+            <tr>
+                <td>Bio (optional):</td>
+                <td><textarea name="bio">{{ user.bio }}</textarea></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Submit" /></td>
+            </tr>
+        </table>
 	</form>
 {% endblock %}
