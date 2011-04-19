@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block main %}
-{% for team in teams %}
-<p>{{ team.name }}</p>
-{% endfor %}
+    {% for team in teams %}
+        <p>{{ team.name }}</p>
+    {% endfor %}
 {% endblock main %}

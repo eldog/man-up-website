@@ -1,54 +1,61 @@
 {% extends "base.html" %}
 
 {% block main %}
-	{% if member %}
-		<h2>{{ member.handle }}</h2> 
+    {% if member %}
+        <h2>{{ member.handle }}</h2> 
         {% gravatar member.email %}
-		<p>XP: {{ member.score }} | Awards: {{ member.awards.count }}
-		{% if member.real_name %}
-		 | Real name: {{ member.real_name }}
-		{% endif %}
-		{% if member.email %}
-		 | Email: {{member.email}} 
-		 {% endif %}</p>
-		{% if member.bio %}
-			<h3>Bio</h3>
-			<p>{{ member.bio }}</p>
-		{% endif %}
-		<table>
-			<tr>
-				<td/>
-				<th>Name</th>
-				<th>XP</th>
-				<th>Description</th>
-				<th>Proof</th>
-				<th>Awarded</th>
-			</tr>
-			{% for award in member.awards %}
-				<tr>
-					<td><a href="/badges/{{ award.badge.key.id }}"><img src="{{ award.badge.image }}"/></a></td>
-					<td><a href="/badges/{{ award.badge.key.id }}">{{ award.badge.name }}</a></td>
-					<td>{{ award.badge.value }}</td>
-					<td>{{ award.badge.description }}</td>
-					<td>{% if award.proof %}<a href="{{ award.proof }}">PROOF</a>{% endif %}</td>
-					<td>{{ award.date }}</td>
-				</tr>
-			{% endfor %}
-		</table>
-        <p>Talks: </p>
-        {% for talk in member.talks %}
-            <h2>{{ talk.title }}</h2>
-            <p>Meeting: {{ talk.meeting.name }}</p>
-            <p>{{ talk.meeting.start_date|date:"d/m/Y" }}</p>
-            {% if talk.video %}
-            <center>
-                <iframe src="{{ talk.video }}" width="400" height="300" frameborder="0"></iframe>
-                <br />
-            </center>
+        <p>
+            XP: {{ member.score }} | Awards: {{ member.awards.count }}
+            {% if member.real_name %}
+             | Real name: {{ member.real_name }}
             {% endif %}
-            <div>{{ talk.description|safe}}</div>
-        {% endfor %}
-	{% else %}
-		<p>No such member</p>
-	{% endif %}
+            {% if member.email %}
+             | Email: {{member.email}} 
+             {% endif %}
+        </p>
+        {% if member.bio %}
+            <h3>Bio</h3>
+            <p>{{ member.bio }}</p>
+        {% endif %}
+
+        <h3>Awards</h3>
+        <table>
+            <tr>
+                <td/>
+                <th>Name</th>
+                <th>XP</th>
+                <th>Description</th>
+                <th>Proof</th>
+                <th>Awarded</th>
+            </tr>
+            {% for award in member.awards %}
+                <tr>
+                    <td><a href="/badges/{{ award.badge.key.id }}"><img src="{{ award.badge.image }}"/></a></td>
+                    <td><a href="/badges/{{ award.badge.key.id }}">{{ award.badge.name }}</a></td>
+                    <td>{{ award.badge.value }}</td>
+                    <td>{{ award.badge.description }}</td>
+                    <td>{% if award.proof %}<a href="{{ award.proof }}">PROOF</a>{% endif %}</td>
+                    <td>{{ award.date }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        {% if talks %}
+            <h3>Talks: </h3>
+            {% for talk in member.talks %}
+                <h2>{{ talk.title }}</h2>
+                <p>Meeting: {{ talk.meeting.name }}</p>
+                <p>{{ talk.meeting.start_date|date:"d/m/Y" }}</p>
+                {% if talk.video %}
+                <center>
+                    <iframe src="{{ talk.video }}" width="400" height="300" frameborder="0"></iframe>
+                    <br />
+                </center>
+                {% endif %}
+                <div>{{ talk.description|safe}}</div>
+            {% endfor %}
+        {% endif %}
+    {% else %}
+        <p>No such member</p>
+    {% endif %}
 {% endblock %}

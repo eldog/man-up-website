@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block main %}
-	{% if error %}
-		<p>{{ error }}</p>
-	{% endif %}
-	<h3>Update Profile</h3>
-	<form action="/account" method="post">
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+    <h3>Update Profile</h3>
+    <form action="/account" method="post">
         <table class="form">
             <tr>
                 <td>Handle:</td> 
@@ -28,5 +28,5 @@
                 <td><input type="submit" value="Submit" /></td>
             </tr>
         </table>
-	</form>
+    </form>
 {% endblock %}

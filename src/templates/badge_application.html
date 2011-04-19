@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block main %}
-	{% if message %}
-		<p>{{ message }}</p>
-	{% else %}
+    {% if message %}
+        <p>{{ message }}</p>
+    {% else %}
         <h3>Update Profile</h3>
         <form action="/badge_application" method="post">
             <table class="form">
@@ -29,5 +29,5 @@
                 </tr>
             </table>
         </form>
-	{% endif %}
+    {% endif %}
 {% endblock %}
