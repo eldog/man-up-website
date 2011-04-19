@@ -8,16 +8,15 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 
 from handlers import AccountHandler, AdminHandler, BadgeHandler, \
     BadgesHandler, BadgeApplicationHandler, CalendarHandler, ContactHandler, \
-    FAQHandler, HackathonHandler, LoginHandler, ManualHandler, \
-    MasterclassHandler, MemberHandler, MembersHandler, \
-    MessagesHandler, MeetingHandler, NewsHandler, NewsLetterHandler, NewsLetterTaskHandler, \
-    TalksHandler, TeamsHandler, TeamSubmissionHandler
+    FAQHandler, FileNotFoundHandler, HackathonHandler, LoginHandler, \
+    ManualHandler, MasterclassHandler, MemberHandler, MembersHandler, \
+    MessagesHandler, NewsHandler, TalksHandler
 
 application = WSGIApplication(
     (('/'                  , NewsHandler),
      ('/account'           , AccountHandler),
      ('/admin'             , AdminHandler),
-     ('/badges'            , BadgesHandler),
+     ('/badges/'           , BadgesHandler),
      ('/badges/([^/]+)'    , BadgeHandler),
      ('/badge_application' , BadgeApplicationHandler),
      ('/calendar'          , CalendarHandler),
@@ -27,15 +26,11 @@ application = WSGIApplication(
      ('/login'             , LoginHandler),
      ('/manual'            , ManualHandler),
      ('/masterclass'       , MasterclassHandler),
-     ('/members'           , MembersHandler),
+     ('/members/'          , MembersHandler),
      ('/members/([^/]+)'   , MemberHandler),
-     ('/messages/(\d+)'    , MessagesHandler),
-     ('/newsletter'        , NewsLetterHandler),
-     ('/task/newsletter'   , NewsLetterTaskHandler),
-     ('/task/meeting'      , MeetingHandler),
-     ('/talk'              , TalksHandler),
-     ('/teams'             , TeamsHandler),
-     ('/team_submission'   , TeamSubmissionHandler)),
+     ('/messages/([^/]+)'  , MessagesHandler),
+     ('/talks/'            , TalksHandler),
+     ('/(.+)'              , FileNotFoundHandler)),
     debug=True)
 
 def main(argv=None):
@@ -43,6 +38,6 @@ def main(argv=None):
         argv = sys.argv
     run_wsgi_app(application)
     return 0
-    
+
 if __name__ == '__main__':
     exit(main())

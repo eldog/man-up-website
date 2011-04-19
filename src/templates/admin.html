@@ -23,6 +23,13 @@
                     <td>Author:</td>
                     <td><input type="text" name="author" /></td>
                 </tr>
+				<tr>
+					<td>Date</td>
+					<td>
+						<input type="text" name="date" id="news_date" />
+						<script>$('#news_date').datepicker({dateFormat: 'yy-mm-dd'})</script>
+		    		</td>
+		    	</tr>                
                 <tr>
                     <td>Body:</td>
                     <td><textarea name="body"></textarea></td>
@@ -111,6 +118,10 @@
             <input type="hidden" name="kind" value="talk"/>
             <table class="form">
                 <tr>
+                    <td>Title:</td>
+                    <td><input type="text" name="title"/></td>
+                </tr>
+                <tr>
                     <td>Member:</td> 
                     <td>
                         <select name="member">
@@ -119,21 +130,14 @@
                             {% endfor %}
                         </select>
                     </td>
-                </tr>
+                </tr>                
                 <tr>
-                    <td>Meeting:</td>
+                    <td>Date</td>
                     <td>
-                        <select name="meeting">
-                            {% for meeting in meetings %}
-                                <option value="{{ meeting.key.id }}">"{{ meeting.name }}" on {{ meeting.start_date }}</option>
-                            {% endfor %}
-                        </select>
+                        <input type="text" name="date" id="talk_date" />
+                        <script>$('#talk_date').datepicker({dateFormat: 'yy-mm-dd'})</script>
                     </td>
-                </tr>
-                <tr>
-                    <td>Title:</td>
-                    <td><input type="text" name="title"/></td>
-                </tr>
+                </tr>                 
                 <tr>
                     <td>Video:</td>
                     <td><input type="text" name="video"/></td>

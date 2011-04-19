@@ -57,6 +57,13 @@ body {
 	text-align: right;
 }
 
+#newsitem {
+	margin: auto;
+	border-style: solid;
+	border-width: 5px;
+	border-color: #FFFFFF;
+}
+
 #main {
     float: left;
     clear: left;
@@ -80,6 +87,24 @@ table {
 td {
 	padding: 5px;
 }
+
+.admin_news input {
+	width: 100%;
+}
+
+.admin_news textarea {
+	width: 100%;
+	height: 200px;
+}
+
+.badge_application select {
+	width: 100%;
+}
+
+.badge_application textarea {
+	width: 100%;
+	height: 200px;
+}	
 
 th {
 	background-color: gray;

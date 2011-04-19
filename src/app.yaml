@@ -45,17 +45,7 @@ handlers:
   - url: /login
     script: main.py
     login: required
-    
-  - url: /task/newsletter
-    script: main.py
-    login: admin
-    auth_fail_action: unauthorized
-    
-  - url: /task/meeting
-    script: main.py
-    login: admin
-    auth_fail_action: unauthorized
-  
+     
   # Other
   - url: /.*
     script: main.py 

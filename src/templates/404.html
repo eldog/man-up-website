@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <h1>Page not found</h1>
+    <p>
+        This is not the page you were looking for (with probability 1 -
+        &delta;).
+    </p>
+    <p>
+        Either you are confused, or our appengine is. If its the latter, please
+        stop trying to confuse it, it gets upset.
+    </p>
+    {% if url %}
+        <p>You were trying to go to "{{ url }}", but failed.</p>
+    {% endif %}
+{% endblock %}
