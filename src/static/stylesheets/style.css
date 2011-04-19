@@ -64,7 +64,15 @@ body {
 	border-color: #FFFFFF;
 }
 
+#main {
+    float: left;
+    clear: left;
+}
+
 #footer {
+    float: left;
+    clear: left;
+    width: 800px;
 	color: gray;
 	font-size: small;
 	margin-bottom: 50px;
@@ -102,3 +110,53 @@ th {
 	background-color: gray;
 }
 
+#tab-links {
+    float: left;
+}
+
+.tab-link {
+    text-decoration: underline;
+    float: left;
+    margin-right: 20px;
+}
+
+.tab-link:hover {
+    cursor: pointer;
+}
+
+.tab-page {
+    clear: left;
+    float: left;
+    display: none;
+}
+
+table {
+    border-spacing: 0px;
+}
+
+
+td {
+    vertical-align:  top;
+    text-align: right;
+    padding: 5px;
+    margin: 0px;
+}
+
+input, textarea, select {
+    width: 250px;
+    background-color: #ffffff;
+    border-width: 3px;
+    border-style: double;
+    border-color: #111111;
+    padding: 0px;
+    margin: 0px;
+}
+
+select {
+    width: 255px;
+}
+
+input[type=submit] {
+    padding: 1px;
+    width: auto;
+}

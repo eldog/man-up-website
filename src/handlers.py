@@ -9,11 +9,13 @@ from google.appengine.ext.db import GqlQuery
 
 import utils
 
-from models import Award, Badge, Hacker, NewsArticle, Meeting, Team
+from models import Award, Badge, Hacker, NewsArticle, Meeting, Team, Talk
 
 from manupcalendar import ManUpCalendar
 
 get_path = utils.path_getter(__file__)
+
+template.register_template_library('templatetags.customtags')
 
 class BaseHandler(RequestHandler):
     login_required = False
@@ -111,35 +113,46 @@ class AccountHandler(BaseHandler):
         self.render_template('account')
 
 class AdminHandler(BaseHandler):
+
     login_required = True
+
     def post(self):
         post = self.request.POST
         if post['kind'] == 'badge':
-            b = Badge(name=post['name'], description=post['description'],
+            badge = Badge(name=post['name'], description=post['description'],
                       category=post['category'], image=post['image'],
                       value=int(post['value']))
-            b.save()
+            badge.save()
         elif post['kind'] == 'article':
-            d = datetime.datetime.strptime(post['date'], '%Y-%m-%d').date()
-            a = NewsArticle(title=post['title'], author=post['author'],
-                             body=post['body'], date=d)
-            a.save()
+            date = datetime.datetime.strptime(post['date'], '%Y-%m-%d').date()
+            article = NewsArticle(title=post['title'], author=post['author'],
+                             body=post['body'], date=date)
+            article.save()
         elif post['kind'] == 'award':
-            badge = Badge.gql('WHERE name = :1', post['badge']).get()
+            badge = Badge.get_by_id(int(post['badge']))
             for h in post.getall('hackers'):
-                hacker = Hacker.gql('WHERE handle = :1', h).get()
-                a = Award(hacker=hacker,
-                        badge=badge,
-                        date=datetime.date.today(),
-                        proof=post['proof'])
-                a.save()
+                hacker = Hacker.get_by_id(int(h))
+                award = Award(hacker=hacker,
+                          badge=badge,
+                          date=datetime.date.today(),
+                          proof=post['proof'])
+                award.save()
                 hacker.score_cache = hacker.score + badge.value
                 hacker.save()
+        elif post['kind'] == 'talk':
+            talk = Talk(title=post['title'],
+                        description=post['description'],
+                        member=Hacker.get_by_id(int(post['member'])),
+                        meeting=Meeting.get_by_id(int(post['meeting'])))
+            if post['video']:
+                talk.video = post['video']
+            talk.put()
         self.get()
 
     def get(self):
         self.render_template('admin', {'badges': Badge.all(),
-                                       'hackers': Hacker.all()})
+                                       'members': Hacker.all(),
+                                       'meetings': Meeting.all()})
 
 class BadgeHandler(BaseHandler):
     def get(self, name):
@@ -351,10 +364,9 @@ class NewsLetterTaskHandler(NewsLetterHandler):
         self.email_newsletter(self.get_feed(now.strftime('%Y-%m-%d'),
                               this_time_next_week.strftime('%Y-%m-%d')))
 
-
 class TalksHandler(BaseHandler):
     def get(self):
-        self.render_template('talks')
+        self.render_template('talks', {'talks' : Talk.all()})
 
 class TeamsHandler(BaseHandler):
     def get(self):

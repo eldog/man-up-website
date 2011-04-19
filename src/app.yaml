@@ -18,6 +18,9 @@ handlers:
 
   - url: /project-files
     static_dir: static/project-files
+
+  - url: /javascript
+    static_dir: static/javascript
   
   - url: /stylesheets
     static_dir: static/stylesheets
