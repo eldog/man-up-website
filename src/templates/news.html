@@ -1,15 +1,14 @@
 {% extends "base.html" %} 
-{% block main %}
 
-	{% for newsitem in news_list %}
+{% block main %}
+	<h1>News</h1>
+	{% for news_item in news_list %}
 		<div class="newsitem">
-			<h1>{{ newsitem.title }}</h1>
-			<p>Author: {{ newsitem.author }}, Date: {{ newsitem.date }}</p>
+			<h2>{{ news_item.title }}</h2>
+			<p>Author: {{ news_item.author }}, Date: {{ news_item.date }}</p>
 			{% autoescape off %}
-				{{ newsitem.body }}
+				{{ news_item.body }}
 			{% endautoescape %}
-			<p>{{ newsitem.author }}</p>
 		</div>
 	{% endfor %}
-
 {% endblock %}

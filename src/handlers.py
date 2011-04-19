@@ -281,7 +281,7 @@ class MessagesHandler(BaseHandler):
 
 class NewsHandler(BaseHandler):
     def get(self):
-        news_list = GqlQuery('SELECT * FROM NewsArticle ORDER BY date DESC').fetch(5);
+        news_list = GqlQuery('SELECT * FROM NewsArticle ORDER BY date DESC');
         self.render_template('news', {'news_list': news_list})
 
 class NewsLetterHandler(BaseHandler):
