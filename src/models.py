@@ -29,12 +29,6 @@ class Hacker(db.Model):
             hacker.put()
         return hacker
 
-class Meeting(db.Model):
-    name = db.StringProperty(required=True)
-    start_date = db.DateTimeProperty(required=True)
-    location = db.StringProperty(required=True)
-
-
 class Badge(db.Model):
     name = db.StringProperty(required=True)
     description = db.StringProperty(required=True)
@@ -58,8 +52,9 @@ class NewsArticle(db.Model):
 
 
 class Talk(db.Model):
-    member = db.ReferenceProperty(Hacker, required=True)
     title = db.StringProperty()
+    member = db.ReferenceProperty(Hacker, required=True)
+    date = db.DateProperty(required=True)
     video = db.LinkProperty()
     description = db.TextProperty()
 

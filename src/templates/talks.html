@@ -2,19 +2,12 @@
 
 {% block main %}
     <h1>Talks</h1>
-    <p>
-        Talks given by members of MAN-UP in the meetings are archived here. 
-        This allows members of MAN-UP to have a place where they can showcase things that they are interested in.
-    </p>
-
     {% for talk in talks %}
         <h2>{{ talk.title }}</h2>
-        <p>Meeting: {{ talk.meeting.name }}</p>
-        <p>{{ talk.meeting.start_date|date:"d/m/Y" }}</p>
+        <p>{{ talk.member.handle }} {{ talk.date }}</p>
         <center>
             <iframe src="{{ talk.video }}" width="400" height="300" frameborder="0"></iframe>
-            <br />
         </center>
-        <div>{{ talk.description|safe}}</div>
+        <div>{{ talk.description|safe }}</div>
     {% endfor %}
 {% endblock %}

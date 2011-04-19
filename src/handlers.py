@@ -8,7 +8,7 @@ from google.appengine.ext.webapp import RequestHandler, template
 from google.appengine.ext.db import GqlQuery
 
 import utils
-from models import Award, Badge, Hacker, NewsArticle, Meeting, Talk
+from models import Award, Badge, Hacker, NewsArticle, Talk
 
 get_path = utils.path_getter(__file__)
 
@@ -132,6 +132,7 @@ class AdminHandler(BaseHandler):
                 hacker.save()
         elif post['kind'] == 'talk':
             talk = Talk(title=post['title'],
+                        date=datetime.datetime.strptime(post['date'], '%Y-%m-%d').date(),
                         description=post['description'],
                         member=Hacker.get_by_id(int(post['member'])),
                         video=post['video'])
@@ -140,8 +141,7 @@ class AdminHandler(BaseHandler):
 
     def get(self):
         self.render_template('admin', {'badges': Badge.all(),
-                                       'members': Hacker.all(),
-                                       'meetings': Meeting.all()})
+                                       'members': Hacker.all()})
 
 class BadgeHandler(BaseHandler):
     def get(self, name):
@@ -277,4 +277,5 @@ class NewsHandler(BaseHandler):
 
 class TalksHandler(BaseHandler):
     def get(self):
-        self.render_template('talks', {'talks' : Talk.all()})
+        talks = GqlQuery('SELECT * FROM Talk ORDER BY date DESC');
+        self.render_template('talks', {'talks' : talks})

@@ -26,8 +26,8 @@
 				<tr>
 					<td>Date</td>
 					<td>
-						<input type="text" name="date" id="date" />
-						<script>$('#date').datepicker({dateFormat: 'yy-mm-dd'})</script>
+						<input type="text" name="date" id="news_date" />
+						<script>$('#news_date').datepicker({dateFormat: 'yy-mm-dd'})</script>
 		    		</td>
 		    	</tr>                
                 <tr>
@@ -105,7 +105,7 @@
                     <td><input type="text" name="proof"/></td>
                 </tr>
                 <tr>
-                    <td></td>
+                    <td/>
                     <td>
                         <input type="submit" />
                     </td>
@@ -120,6 +120,10 @@
             <input type="hidden" name="kind" value="talk"/>
             <table>
                 <tr>
+                    <td>Title:</td>
+                    <td><input type="text" name="title"/></td>
+                </tr>
+                <tr>
                     <td>Member:</td> 
                     <td>
                         <select name="member">
@@ -128,11 +132,14 @@
                             {% endfor %}
                         </select>
                     </td>
-                </tr>
+                </tr>                
                 <tr>
-                    <td>Title:</td>
-                    <td><input type="text" name="title"/></td>
-                </tr>
+                    <td>Date</td>
+                    <td>
+                        <input type="text" name="date" id="talk_date" />
+                        <script>$('#talk_date').datepicker({dateFormat: 'yy-mm-dd'})</script>
+                    </td>
+                </tr>                 
                 <tr>
                     <td>Video:</td>
                     <td><input type="text" name="video"/></td>
