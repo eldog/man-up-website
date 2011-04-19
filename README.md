@@ -14,7 +14,7 @@ on.
 Style Guide
 -----------
 
-Please follow the (http://www.python.org/dev/peps/pep-0008/ "python style guide"
+Please follow the (http://www.python.org/dev/peps/pep-0008/ "python style guide")
 
 Use spaces everywhere, no tabs, not even in HTML/CSS.
  
