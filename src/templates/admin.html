@@ -2,43 +2,155 @@
 
 {% block main %}
 	<p>THIS IS THE GOD PAGE. I'VE NOT WRITTEN ANY SAFETY INTO THIS, SO BE CAREFUL.</P>
+
+    <div id="tab-links">
+        <div id="news" class="tab-link">News</div>
+        <div id="badge" class="tab-link">Badge</div>
+        <div id="award" class="tab-link">Award</div>
+        <div id="talk" class="tab-link">Talk</div>
+    </div>
 	
-	<h2>News Article</h2>
-	<form action="/admin" method="post">
-		<input type="hidden" name="kind" value="article"/>
-		Title: <input type="text" name="title" /><br />
-		Author: <input type="text" name="author" /><br />
-		Body: <br />
-		<textarea name="body"></textarea><br/>
-		<input type="submit">Submit</input>
-	</form>
+    <div id="news-tab-page" class="tab-page" style="display: block;">
+        <h2>News Article</h2>
+        <form action="/admin" method="post">
+            <input type="hidden" name="kind" value="article"/>
+            <table>
+                <tr>
+                    <td>Title:</td> 
+                    <td><input type="text" name="title" /></td>
+                </tr>
+                <tr>
+                    <td>Author:</td>
+                    <td><input type="text" name="author" /></td>
+                </tr>
+                <tr>
+                    <td>Body:</td>
+                    <td><textarea name="body"></textarea></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
 	
-	<h2>Bagde</h2>
-	<form action="/admin" method="post">
-		<input type="hidden" name="kind" value="badge"/>
-		Name: <input type="text" name="name"/><br/>
-		Desc: <input type="text" name="description"/><br/>
-		Cate: <input type="text" name="category"/><br/>
-		Image: <input type="text" name="image"/><br/>
-		value: <input type="text" name="value"/><br/>	
-		<input type="submit">Submit</input>
-	</form>
+    <div id="badge-tab-page" class="tab-page">
+        <h2>Bagde</h2>
+        <form action="/admin" method="post">
+            <input type="hidden" name="kind" value="badge"/>
+            <table>
+                <tr>
+                    <td>Name:</td>
+                    <td><input type="text" name="name"/></td>
+                </tr>
+                <tr>
+                    <td>Description:</td>
+                    <td><input type="text" name="description"/></td>
+                </tr>
+                <tr>
+                    <td>Category:</td>
+                    <td><input type="text" name="category"/></td>
+                </tr>
+                <tr>
+                    <td>Image:</td>
+                    <td><input type="text" name="image"/></td>
+                </tr>
+                <tr>
+                    <td>Value:</td>
+                    <td><input type="text" name="value"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
 	
-	<h2>Award</h2>
-	<form action="/admin" method="post">
-		<input type="hidden" name="kind" value="award"/>
-		<select name="hackers" size="20" multiple="multiple">
-			{% for hacker in hackers %}
-				<option value="{{ hacker.handle }}">{{ hacker.handle }}</option>
-			{% endfor %}
-		</select>
-		<select name="badge" size="20">
-			{% for badge in badges %}
-				<option value="{{ badge.name }}">{{ badge.name }}</option>
-			{% endfor %}
-		</select><br/>
-		Proof: <input type="text" name="proof"/><br />
-		<input type="submit">Submit</input>
-	</form>
-	
+    <div id="award-tab-page" class="tab-page">
+        <h2>Award</h2>
+        <form action="/admin" method="post">
+            <input type="hidden" name="kind" value="award"/>
+            <table>
+                <tr>
+                    <td>Member:</td> 
+                    <td>
+                        <select name="hackers" size="20" multiple="multiple">
+                            {% for member in members %}
+                                <option value="{{ member.key.id }}">{{ member.handle }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Badge:</td>
+                    <td>
+                        <select name="badge">
+                            {% for badge in badges %}
+                                <option value="{{ badge.key.id }}">{{ badge.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Proof:</td>
+                    <td><input type="text" name="proof"/></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <div id="talk-tab-page" class="tab-page">
+        <h2>Talk</h2>
+        <form action="/admin" method="post">
+            <input type="hidden" name="kind" value="talk"/>
+            <table>
+                <tr>
+                    <td>Member:</td> 
+                    <td>
+                        <select name="member">
+                            {% for member in members %}
+                                <option value="{{ member.key.id }}">{{ member.handle }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Meeting:</td>
+                    <td>
+                        <select name="meeting">
+                            {% for meeting in meetings %}
+                                <option value="{{ meeting.key.id }}">"{{ meeting.name }}" on {{ meeting.start_date }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Title:</td>
+                    <td><input type="text" name="title"/></td>
+                </tr>
+                <tr>
+                    <td>Video:</td>
+                    <td><input type="text" name="video"/></td>
+                </tr>
+                <tr>
+                    <td>Description:</td>
+                    <td><textarea name="description"></textarea></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" />
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
 {% endblock %}

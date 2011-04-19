@@ -75,3 +75,10 @@ class Project(db.Model):
     name = db.StringProperty(required=True)
     description = db.TextProperty(required=True)
     hacker = db.ReferenceProperty(Hacker, collection_name='projects')
+
+class Talk(db.Model):
+    meeting = db.ReferenceProperty(Meeting, required=True)
+    member = db.ReferenceProperty(Hacker, required=True)
+    title = db.StringProperty()
+    description = db.TextProperty()
+    video = db.LinkProperty()

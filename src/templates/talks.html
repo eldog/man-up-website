@@ -1,117 +1,20 @@
 {% extends "base.html" %}
 
 {% block main %}
-	<h1>Talks</h1>
-	<p>
-	Talks given by members of MAN-UP in the meetings are archived here. 
-	This allows members of MAN-UP to have a place where they can showcase things that they are interested in.</p>
-	
-	<h2>Hafeed's Web Sockets/quake2d</h2>
-	<p>Meeting: 2</p>
-	<p>24/2/2011</p>
-	<center>
-	<iframe src="http://player.vimeo.com/video/20432102" width="400" height="300" frameborder="0"></iframe>
-	<br />
-	</center>	
+    <h1>Talks</h1>
+    <p>
+        Talks given by members of MAN-UP in the meetings are archived here. 
+        This allows members of MAN-UP to have a place where they can showcase things that they are interested in.
+    </p>
 
-	<h2>Richar2D2's RPG</h2>
-	<p>Meeting: 2</p>
-	<p>24/2/2011</p>
-	<center>
-	<iframe src="http://player.vimeo.com/video/20432028" width="400" height="300" frameborder="0"></iframe>
-	<br />
-	</center>	
-
-	<h2>Foxxy's Centurion</h2>
-	<p>Meeting: 2</p>
-	<p>24/2/2011</p>	
-	<center>
-	<iframe src="http://player.vimeo.com/video/20347763" width="400" height="300" frameborder="0"></iframe>
-	<br />
-	</center>
-
-	<h2>Cosmin's LED cube</h2>
-	<p>Meeting: 1</p>
-	<p>17/2/2011<p>	
-	<center>
-	<iframe src="http://player.vimeo.com/video/20143316" width="400" height="300" frameborder="0"></iframe>
-	<br />
-	</center>
-	
-	<h2>Craigacp's Face recognition and speech synthesis software</h2>
-	<p>Meeting: 1</p>
-	<p>17/2/2011<p>	
-	<center>
-	<iframe src="http://player.vimeo.com/video/20141014" width="400" height="300" frameborder="0"></iframe>
-
-	</center>
-	<br />
-	<p>
-	The is a quick hack together of two open source libraries, just to show how
-	many things are out there and how easy it is to program things which look
-	reasonably cool.
-	</p>
-	<p>
-	It uses OpenCV (a computer vision library) to perform a face recognition
-	technique called <a href="http://www.wikipedia.org/wiki/eigenfaces">Eigenfaces</a> which is one of
-	the simplest
-	methods for recognising faces. Eigenfaces averages all the faces together to
-	find the mean face, and then finds the principle variations between that
-	face and the
-	rest of the training faces using a process called Principle Components
-	Analysis (PCA). It then converts all the training faces into linear sums of
-	these components
-	(called eigenfaces), and recognises test faces by asking how close their
-	linear coefficients are to the training examples. Face detection is
-	something I didn't talk about
-	but the algorithm used is the <a href="http://en.wikipedia.org/wiki/Viola-Jones_object_detection_framework">Viola & Jones cascade</a>,
-	which is a standard technique for object recognition.
-	It works by passing a window over the image and looking for certain features
-	indicative of faces. Its an example of an ensemble learning technique for
-	those who did the
-	2nd year Machine Learning course. This code is mainly based on the tutorial
-	by <a href="http://www.shervinemami.co.cc/faceRecognition.html">Shervin Emami</a> but
-	objectified
-	to make it easier to use in other projects.
-	</p>
-	<p>
-	The speech synthesis is much easier than I'd imagined, and essentially just
-	instantiates an espeak object, and then passes it a char * to say. It does
-	sound rather
-	robotic, but its extremely easy to use, and is cross platform, and those
-	things are useful when trying to hack something together in two evenings.
-	</p>
-	<p>
-	Also, the code in that tarball isn't ideal, or even good, but it works, so
-	I'd achieved the first part of "Make it work, make it elegant, make it
-	fast".
-	</p>
-	
-	<a href="/project-files/FaceRecognition.tar.gz">Source code</a>
-	
-	<p>
-	-- Adam
-	</p>
-	
-	<h2>Eldog's Android Game: RGBRPG</h2>
-	<p>Meeting: 1</p>
-	<p>17/2/2011<p>		
-	<center><iframe src="http://player.vimeo.com/video/20141173" width="400" height="300" frameborder="0"></iframe><br />
-	</center>
-	<p>This was a game which I created over two weeks in the Summer of 2010. It was my first forray into
-	android development and honestly, I made it pretty poorly. However, it works and is fun, so I guess that's
-	all that matters :p .</p>
-	<p> You can download a working alpha version here </p>
-	<center>
-	<img src="http://qrcode.kaywa.com/img.php?s=8&d=http%3A%2F%2Fdl.dropbox.com%2Fu%2F2940359%2FRGBRPG.apk" alt="rgbrpg qr code"/>
-	</center>
-	<p> And the source is <a href="http://code.google.com/p/rgbrpg">here</a>
-	<p>-- eldog</p>
-	
-	<h2>Foxxy's 8-bit PCM WAV manipulation library</h2>
-	<p>I once had to manipulate some WAVs. <a href="/project-files/wav.py">Here</a> is the Python I wrote to do
-	   it. It's not very robust but I uses some clever Python tricks to read and
-	   write the WAV files. Take a look, use, improve and share.</p>
-	   <p> <a href="/project-files/wav.py">8-bit PCM WAV manipulation library</a>
-	<p>-- foxxy</p>
+    {% for talk in talks %}
+        <h2>{{ talk.title }}</h2>
+        <p>Meeting: {{ talk.meeting.name }}</p>
+        <p>{{ talk.meeting.start_date|date:"d/m/Y" }}</p>
+        <center>
+            <iframe src="{{ talk.video }}" width="400" height="300" frameborder="0"></iframe>
+            <br />
+        </center>
+        <div>{{ talk.description|safe}}</div>
+    {% endfor %}
 {% endblock %}
