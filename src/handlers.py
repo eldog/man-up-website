@@ -1,6 +1,6 @@
+import datetime
 import os
 import urllib
-import datetime
 
 from google.appengine.api import users
 from google.appengine.api.mail import send_mail
@@ -8,26 +8,16 @@ from google.appengine.ext.webapp import RequestHandler, template
 from google.appengine.ext.db import GqlQuery
 
 import utils
-
-from models import Award, Badge, Hacker, NewsArticle, Meeting, Team, Talk
-
-from manupcalendar import ManUpCalendar
+from models import Award, Badge, Hacker, NewsArticle, Meeting, Talk
 
 get_path = utils.path_getter(__file__)
 
-template.register_template_library('templatetags.customtags')
-
 class BaseHandler(RequestHandler):
     login_required = False
-
     title = None
 
     def render_template(self, template_name, template_dict=None):
-        next_meeting = Meeting.get_next_meeting()
-        if next_meeting:
-            tag_line = '%s: %s, %s' % (next_meeting.name, next_meeting.start_date, next_meeting.location)
-        else:
-            tag_line = 'Evening Hack: 14/4/2011 5pm LF15'
+        tag_line = 'Next meeting coming soon'
 
         if template_dict is None:
             template_dict = {}
@@ -46,6 +36,7 @@ class BaseHandler(RequestHandler):
 
         defaults = {
             'user': user,
+            'is_admin': users.is_current_user_admin(),
             'log_url': url_creator(redirect_target),
             'tag_line': tag_line,
             'title': self.title
@@ -143,9 +134,7 @@ class AdminHandler(BaseHandler):
             talk = Talk(title=post['title'],
                         description=post['description'],
                         member=Hacker.get_by_id(int(post['member'])),
-                        meeting=Meeting.get_by_id(int(post['meeting'])))
-            if post['video']:
-                talk.video = post['video']
+                        video=post['video'])
             talk.put()
         self.get()
 
@@ -159,6 +148,7 @@ class BadgeHandler(BaseHandler):
         query = Badge.gql('WHERE name = :1', urllib.unquote(name))
         badge = iter(query).next() if query.count() else None
         self.render_template('badge', {'badge': badge})
+
 
 class BadgeApplicationHandler(BaseHandler):
     login_required = True
@@ -241,18 +231,6 @@ class MasterclassHandler(BaseHandler):
     def get(self):
         self.render_template('masterclass')
 
-class MeetingHandler(BaseHandler):
-    def get(self):
-        calendar = ManUpCalendar()
-        feed = calendar.get_feed()
-        for entry in feed.entry:
-            for a_when in entry.when:
-                date_string = a_when.start_raw[:19]
-                date = datetime.datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%S')
-                for where in entry.where:
-                    meeting = Meeting(name=entry.title.text, start_date=date, location=where.value)
-                    meeting.put()
-
 class MembersHandler(BaseHandler):
     def get(self):
         hackers = list(Hacker.all())
@@ -279,7 +257,7 @@ class MemberHandler(BaseHandler):
 class MessagesHandler(BaseHandler):
     def get(self, message_index=None):
         if message_index == None:
-            self.render_template('message_list')
+            self.render_template('404', {'url' : 'message number ' + message_index})
         else:
             message_path = 'static/messages/%s.html' % message_index
             cur_file = None
@@ -297,91 +275,6 @@ class NewsHandler(BaseHandler):
         news_list = GqlQuery('SELECT * FROM NewsArticle ORDER BY date DESC');
         self.render_template('news', {'news_list': news_list})
 
-class NewsLetterHandler(BaseHandler):
-    _post_fields = frozenset(('start_date', 'end_date'))
-    def post(self):
-        post = self.request.POST
-        if 'start_date' in post.keys() and 'end_date' in post.keys():
-            current_user = users.get_current_user()
-            # Validate our dates
-            start_date = post['start_date']
-            end_date = post['end_date']
-            email = 'email' in post.keys()
-            try:
-                datetime.datetime.strptime(start_date, '%Y-%m-%d')
-                datetime.datetime.strptime(end_date, '%Y-%m-%d')
-            except ValueError:
-                errors_dict = { 'date_error' : 'Invalid dates' }
-                self.render_template('newsletter', {'errors' : errors_dict})
-                return
-            event_feed = self.get_feed(post['start_date'], post['end_date'])
-            if email and current_user and current_user.email():
-                self.email_newsletter(event_feed, target=current_user.email())
-            self.display_results(event_feed)
-        else:
-            errors_dict = { 'date_error' : 'please enter start and end dates' }
-            self.get(temp_dict={'errors' : errors_dict})
-
-    def get(self, temp_dict=None):
-        user = users.get_current_user()
-        email = None
-        if user:
-            email = user or user.email()
-        if not temp_dict:
-            temp_dict = {'email' : email}
-        else:
-            temp_dict['email'] = email
-        if temp_dict:
-            self.render_template('newsletter', temp_dict)
-
-    def email_newsletter(self, template_dict,
-                         target='lloyd.w.henning@gmail.com, petersutton2009@gmail.com'):
-        email_html_template_path = get_path(
-            os.path.join('templates', 'newsletter_email.html'))
-        email_body_template_path = get_path(
-            os.path.join('templates', 'newsletter_email_plain.txt'))
-        email_html = template.render(email_html_template_path, {'event_feed' : template_dict})
-        email_body = template.render(email_body_template_path, {'event_feed' : template_dict})
-        send_mail(
-                sender='lloyd.w.henning@gmail.com',
-                to=target,
-                subject='Newsletter',
-                body=email_body,
-                html=email_html)
-
-    def display_results(self, event_feed):
-        self.get(temp_dict={'event_feed' : event_feed})
-
-    def get_feed(self, start, end):
-        calendar = ManUpCalendar()
-        return calendar.get_feed(start_date=start, end_date=end)
-
-class NewsLetterTaskHandler(NewsLetterHandler):
-    login_required = True
-    def get(self):
-        now = datetime.datetime.now()
-        this_time_next_week = now + datetime.timedelta(weeks=1)
-        self.email_newsletter(self.get_feed(now.strftime('%Y-%m-%d'),
-                              this_time_next_week.strftime('%Y-%m-%d')))
-
 class TalksHandler(BaseHandler):
     def get(self):
         self.render_template('talks', {'talks' : Talk.all()})
-
-class TeamsHandler(BaseHandler):
-    def get(self):
-        self.render_template('teams', {'teams' : list(Team.all())})
-
-class TeamSubmissionHandler(BaseHandler):
-    login_required = True
-
-    def get(self):
-        self.render_template('team_submission')
-
-    def post(self):
-        post = self.request.POST
-
-        team = Team(name=post['team_name'])
-        team.save()
-
-        self.response.out.write("submitted")

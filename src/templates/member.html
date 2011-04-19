@@ -1,21 +1,16 @@
 {% extends "base.html" %}
 
 {% block main %}
-	{% if hacker %}
+    {% if hacker %}
 		<h2>{{ hacker.handle }}</h2> 
-        {% gravatar hacker.email %}
-		<p>XP: {{ hacker.score }} | Awards: {{ hacker.awards.count }}
-		{% if hacker.real_name %}
-		 | Real name: {{ hacker.real_name }}
-		{% endif %}
-		{% if hacker.email %}
-		 | Email: {{hacker.email}} 
-		 {% endif %}</p>
+        
+        <p>XP: {{ hacker.score }} | Awards: {{ hacker.awards.count }}{% if hacker.real_name %} | Real name: {{ hacker.real_name }}{% endif %}{% if hacker.email %} | Email: {{hacker.email}}{% endif %}</p>
 		{% if hacker.bio %}
 			<h3>Bio</h3>
 			<p>{{ hacker.bio }}</p>
 		{% endif %}
-		<table>
+		
+        <table>
 			<tr>
 				<td/>
 				<th>Name</th>
@@ -27,7 +22,7 @@
 			{% for award in hacker.awards %}
 				<tr>
 					<td><a href="/badges/{{ award.badge.name }}"><img src="{{ award.badge.image }}"/></a></td>
-					<td><a href="/badges/{{ award.badge.name }}">{{ award.badge.name }}</a></td>
+        <td><a href="/badges/{{ award.badge.name }}">{{ award.badge.name }}</a></td>
 					<td>{{ award.badge.value }}</td>
 					<td>{{ award.badge.description }}</td>
 					<td>{% if award.proof %}<a href="{{ award.proof }}">PROOF</a>{% endif %}</td>

@@ -130,16 +130,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>Meeting:</td>
-                    <td>
-                        <select name="meeting">
-                            {% for meeting in meetings %}
-                                <option value="{{ meeting.key.id }}">"{{ meeting.name }}" on {{ meeting.start_date }}</option>
-                            {% endfor %}
-                        </select>
-                    </td>
-                </tr>
-                <tr>
                     <td>Title:</td>
                     <td><input type="text" name="title"/></td>
                 </tr>
