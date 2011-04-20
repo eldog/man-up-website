@@ -4,7 +4,7 @@
     <h1>Talks</h1>
     {% for talk in talks %}
         <h2>{{ talk.title }}</h2>
-        <p>{{ talk.member.handle }} {{ talk.date }}</p>
+        <p><a href="/members/{{ talk.member.handle }}"/>{{ talk.member.handle }}</a> {{ talk.date }}</p>
         <center>
             <iframe src="{{ talk.video }}" width="400" height="300" frameborder="0"></iframe>
         </center>

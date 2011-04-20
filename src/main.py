@@ -16,7 +16,7 @@ application = WSGIApplication(
     (('/'                  , NewsHandler),
      ('/account'           , AccountHandler),
      ('/admin'             , AdminHandler),
-     ('/badges/'           , BadgesHandler),
+     ('/badges'            , BadgesHandler),
      ('/badges/([^/]+)'    , BadgeHandler),
      ('/badge_application' , BadgeApplicationHandler),
      ('/calendar'          , CalendarHandler),
@@ -26,10 +26,10 @@ application = WSGIApplication(
      ('/login'             , LoginHandler),
      ('/manual'            , ManualHandler),
      ('/masterclass'       , MasterclassHandler),
-     ('/members/'          , MembersHandler),
+     ('/members'           , MembersHandler),
      ('/members/([^/]+)'   , MemberHandler),
      ('/messages/([^/]+)'  , MessagesHandler),
-     ('/talks/'            , TalksHandler),
+     ('/talks'             , TalksHandler),
      ('/(.+)'              , FileNotFoundHandler)),
     debug=True)
 

@@ -44,14 +44,11 @@
             <h3>Talks: </h3>
             {% for talk in member.talks %}
                 <h2>{{ talk.title }}</h2>
-                <p>Meeting: {{ talk.meeting.name }}</p>
-                <p>{{ talk.meeting.start_date|date:"d/m/Y" }}</p>
-                {% if talk.video %}
+                <p>{{ talk.date }}</p>
                 <center>
                     <iframe src="{{ talk.video }}" width="400" height="300" frameborder="0"></iframe>
                     <br />
                 </center>
-                {% endif %}
                 <div>{{ talk.description|safe}}</div>
             {% endfor %}
         {% endif %}

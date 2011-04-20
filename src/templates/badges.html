@@ -18,8 +18,8 @@
         </tr>
         {% for badge in badges %}
             <tr>
-                <td><a href="/badges/{{ badge.name }}"><img src="{{ badge.image }}"/></a></td>
-                <td><a href="/badges/{{ badge.name }}">{{ badge.name }}</a></td>
+                <td><a href="/badges/{{ badge.key.id }}"><img src="{{ badge.image }}"/></a></td>
+                <td><a href="/badges/{{ badge.key.id }}">{{ badge.name }}</a></td>
                 <td>{{ badge.value }}</td>
                 <td>{{ badge.category }}</td>
                 <td>{{ badge.description}}</td>

@@ -67,6 +67,7 @@ body {
 #main {
     float: left;
     clear: left;
+    width: 100%;
 }
 
 #footer {

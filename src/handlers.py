@@ -9,9 +9,11 @@ from google.appengine.ext.webapp import RequestHandler, template
 from google.appengine.ext.db import GqlQuery
 
 import utils
-from models import Award, Badge, Hacker, NewsArticle, Talk
+from models import Award, Badge, Member, NewsArticle, Talk
 
 get_path = utils.path_getter(__file__)
+
+template.register_template_library('templatetags.customtags')
 
 class BaseHandler(RequestHandler):
 
@@ -134,7 +136,7 @@ class AdminHandler(BaseHandler):
             article.save()
         elif post['kind'] == 'award':
             badge = Badge.get_by_id(int(post['badge']))
-            for member in post.getall('members'):#remove getall()
+            for member in post.getall('members'):
                 member = Member.get_by_id(int(member))
                 award = Award(
                     member=member,
@@ -143,15 +145,12 @@ class AdminHandler(BaseHandler):
                     proof=post['proof']
                 )
                 award.save()
-                member.score_cache = member.score + badge.value
-                member.save()
         elif post['kind'] == 'talk':
             talk = Talk(
                 title=post['title'],
                 date=datetime.datetime.strptime(post['date'], '%Y-%m-%d').date(),
                 description=post['description'],
                 member=Member.get_by_id(int(post['member'])),
-                meeting=Meeting.get_by_id(int(post['meeting']))
                 video=post['video']
             )
             talk.put()
@@ -161,7 +160,6 @@ class AdminHandler(BaseHandler):
         self.render_template('admin', {
             'badges': Badge.all(),
             'members': Member.all(),
-            'meetings': Meeting.all()
         })
         
 
@@ -169,7 +167,7 @@ class BadgeHandler(BaseHandler):
 
     def get(self, id):
         self.render_template('badge', {
-            'badge': Badge.get_by_id(id) #urllib.unquote(id)) XXX
+            'badge': Badge.get_by_id(int(id)) #urllib.unquote(id)) XXX
         })
 
 
@@ -181,13 +179,16 @@ class BadgeApplicationHandler(BaseHandler):
         post = self.request.POST
         if len(post) == 2 and 'badge' in post and 'proof' in post:
             body = 'Member: %s\nBadge: %s\nProof:\n%s' % (
-                Member.get_current_member().handle, post['badge'], 
-                post['proof'])
+                Member.get_current_member().handle, 
+                post['badge'], 
+                post['proof']
+            )
             send_mail(
                 sender='petersutton2009@gmail.com',
                 to='petersutton2009@gmail.com',
                 subject='Badge application',
-                body=body)
+                body=body
+            )
             self.render_template('badge_application', {
                 'message': 'Application submitted. \
                             It will be reviewed as soon as possible.'
@@ -285,8 +286,8 @@ class MembersHandler(BaseHandler):
             members.sort(key=lambda member:(member.score, member.handle))
             rank = 0
             ranked_members = [(rank, members[-1])]
-            for i in range(len(members)-2, 0, -1):
-                if members[i + 1].score_cache != members[i].score_cache:
+            for i in range(len(members) - 2, -1, -1):
+                if members[i + 1].score != members[i].score:
                     rank += 1
                 ranked_members.append((rank, members[i]))
         else:
