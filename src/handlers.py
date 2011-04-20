@@ -167,7 +167,7 @@ class BadgeHandler(BaseHandler):
 
     def get(self, id):
         self.render_template('badge', {
-            'badge': Badge.get_by_id(int(id)) #urllib.unquote(id)) XXX
+            'badge': Badge.get_by_id(int(id))
         })
 
 
