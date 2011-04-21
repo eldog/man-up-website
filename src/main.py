@@ -9,7 +9,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from handlers import AccountHandler, AdminHandler, BadgeHandler, \
     BadgesHandler, BadgeApplicationHandler, CalendarHandler, ContactHandler, \
     FAQHandler, FileNotFoundHandler, HackathonHandler, LoginHandler, \
-    ManualHandler, MasterclassHandler, MemberHandler, MembersHandler, \
+    ManualHandler, MemberHandler, MembersHandler, \
     MessagesHandler, NewsHandler, TalksHandler
 
 from migration.hacker_migration import HackerMigrator
