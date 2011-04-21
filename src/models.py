@@ -8,7 +8,6 @@ class Member(db.Model):
     handle = db.StringProperty(required=True)
     bio = db.TextProperty(default='')
     real_name = db.StringProperty(default='')
-    teams = db.ListProperty(db.Key)
 
     @property
     def score(self):
@@ -26,9 +25,12 @@ class Member(db.Model):
             member.put()
         return member
 
+# Ironic hack, so that we can do data migration. Will need to be deleted in future
+# Release    
+class Hacker(Member):
+    pass    
 
 class Badge(db.Model):
-
     name = db.StringProperty(required=True)
     description = db.StringProperty(required=True)
     category = db.CategoryProperty(required=True)

@@ -12,25 +12,28 @@ from handlers import AccountHandler, AdminHandler, BadgeHandler, \
     ManualHandler, MasterclassHandler, MemberHandler, MembersHandler, \
     MessagesHandler, NewsHandler, TalksHandler
 
+from migration.hacker_migration import HackerMigrator
+
 application = WSGIApplication(
-    (('/'                  , NewsHandler),
-     ('/account'           , AccountHandler),
-     ('/admin'             , AdminHandler),
-     ('/badges'            , BadgesHandler),
-     ('/badges/([^/]+)'    , BadgeHandler),
-     ('/badge_application' , BadgeApplicationHandler),
-     ('/calendar'          , CalendarHandler),
-     ('/contact'           , ContactHandler),
-     ('/faq'               , FAQHandler),
-     ('/hack-a-thon'       , HackathonHandler),
-     ('/login'             , LoginHandler),
-     ('/manual'            , ManualHandler),
-     ('/masterclass'       , MasterclassHandler),
-     ('/members'           , MembersHandler),
-     ('/members/([^/]+)'   , MemberHandler),
-     ('/messages/([^/]+)'  , MessagesHandler),
-     ('/talks'             , TalksHandler),
-     ('/(.+)'              , FileNotFoundHandler)),
+    (('/'                           , NewsHandler),
+     ('/account'                    , AccountHandler),
+     ('/admin'                      , AdminHandler),
+     ('/admin/hacker_migration'     , HackerMigrator),
+     ('/badges'                     , BadgesHandler),
+     ('/badges/([^/]+)'             , BadgeHandler),
+     ('/badge_application'          , BadgeApplicationHandler),
+     ('/calendar'                   , CalendarHandler),
+     ('/contact'                    , ContactHandler),
+     ('/faq'                        , FAQHandler),
+     ('/hack-a-thon'                , HackathonHandler),
+     ('/login'                      , LoginHandler),
+     ('/manual'                     , ManualHandler),
+     ('/masterclass'                , MasterclassHandler),
+     ('/members'                    , MembersHandler),
+     ('/members/([^/]+)'            , MemberHandler),
+     ('/messages/([^/]+)'           , MessagesHandler),
+     ('/talks'                      , TalksHandler),
+     ('/(.+)'                       , FileNotFoundHandler)),
     debug=True)
 
 def main(argv=None):
