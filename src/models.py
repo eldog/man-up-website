@@ -8,11 +8,15 @@ class Member(db.Model):
     handle = db.StringProperty(required=True)
     bio = db.TextProperty(default='')
     real_name = db.StringProperty(default='')
+    score_cache = db.IntegerProperty(default= -1)
 
     @property
     def score(self):
-        return sum(award.badge.value for award in self.awards)
-    
+        if self.score_cache == -1:
+            self.score_cache = sum(award.badge.value for award in self.awards)
+            self.save()
+        return self.score_cache
+
     @classmethod
     def get_current_member(cls):
         user = users.get_current_user()
@@ -28,7 +32,7 @@ class Member(db.Model):
 # Ironic hack, so that we can do data migration. Will need to be deleted in future
 # Release    
 class Hacker(Member):
-    pass    
+    pass
 
 class Badge(db.Model):
     name = db.StringProperty(required=True)
