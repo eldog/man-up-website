@@ -25,9 +25,9 @@ class BaseHandler(RequestHandler):
 
         if template_dict is None:
             template_dict = {}
-        
+
         user = Member.get_current_member()
-        
+
         if user:
             if self.login_required:
                 redirect_target = '/'
@@ -65,11 +65,11 @@ class AccountHandler(BaseHandler):
     valid_letters = (
         'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
     )
-    
+
     banned_names = {
         u'neo': "Fat chance are you Neo. If you are, I'm not gonna get my hopes up",
     }
-    
+
     def post(self):
         if len(self.request.POST) == 4 and 'handle' in self.request.POST \
                 and 'real_name' in self.request.POST \
@@ -80,11 +80,11 @@ class AccountHandler(BaseHandler):
             template_dict = {}
             member = Member.get_current_member()
             other = Member.gql('WHERE handle = :1', handle).get()
-            
+
             if (not handle or len(handle) > 12 or
                 any(l not in self.valid_letters for l in handle)):
                 template_dict['error'] = 'Pick something sensible, you moron.'
-            
+
             elif other and other.user_id != member.user_id:
                 template_dict['error'] = 'Sorry, already taken.'
 
@@ -105,7 +105,7 @@ class AccountHandler(BaseHandler):
                 member.save()
                 template_dict['error'] = 'Profile updated'
             self.render_template('account', template_dict)
-            
+
     def get(self):
         self.render_template('account')
 
@@ -120,7 +120,7 @@ class AdminHandler(BaseHandler):
             badge = Badge(
                 name=post['name'],
                 description=post['description'],
-                category=post['category'], 
+                category=post['category'],
                 image=post['image'],
                 value=int(post['value'])
             )
@@ -128,9 +128,9 @@ class AdminHandler(BaseHandler):
         elif post['kind'] == 'article':
             date = datetime.datetime.strptime(post['date'], '%Y-%m-%d').date()
             article = NewsArticle(
-                title=post['title'], 
+                title=post['title'],
                 author=post['author'],
-                body=post['body'], 
+                body=post['body'],
                 date=date
             )
             article.save()
@@ -145,6 +145,8 @@ class AdminHandler(BaseHandler):
                     proof=post['proof']
                 )
                 award.save()
+                member.score_cache = member.score + badge.value
+                member.save()
         elif post['kind'] == 'talk':
             talk = Talk(
                 title=post['title'],
@@ -161,7 +163,7 @@ class AdminHandler(BaseHandler):
             'badges': Badge.all(),
             'members': Member.all(),
         })
-        
+
 
 class BadgeHandler(BaseHandler):
 
@@ -179,8 +181,8 @@ class BadgeApplicationHandler(BaseHandler):
         post = self.request.POST
         if len(post) == 2 and 'badge' in post and 'proof' in post:
             body = 'Member: %s\nBadge: %s\nProof:\n%s' % (
-                Member.get_current_member().handle, 
-                post['badge'], 
+                Member.get_current_member().handle,
+                post['badge'],
                 post['proof']
             )
             send_mail(
@@ -239,7 +241,7 @@ class FAQHandler(BaseHandler):
 
     def get(self):
         self.render_template('faq')
-        
+
 
 class FileNotFoundHandler(BaseHandler):
     def get(self, handler_name=''):
@@ -271,15 +273,10 @@ class LoginHandler(BaseHandler):
                 self.redirect(self.request.GET.getall('url')[0])
         else:
             self.redirect('/')
-            
-class MasterclassHandler(BaseHandler):
-
-    def get(self):
-        self.render_template('masterclass')
 
 
 class MembersHandler(BaseHandler):
-    
+
     def get(self):
         members = list(Member.all())
         if members:
@@ -292,7 +289,7 @@ class MembersHandler(BaseHandler):
                 ranked_members.append((rank, members[i]))
         else:
             ranked_members = []
-            
+
         self.render_template('members', {
             'members': ranked_members
         })
